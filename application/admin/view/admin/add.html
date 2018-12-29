@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+    <title>添加管理员</title>
+
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox ibox-inverse seo">
+
+                <div class="ibox-content">
+                    <a class="btn btn-sm btn-white" href="{$Think.cookie.__forward__}" >返回</a >
+                    <form class="form-horizontal" role="form" method="post" action="{:url('admin/add')}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="username">用户名 : </label>
+                            <div class="col-sm-6">
+                                <input id="username" class="col-sm-6 form-control" name="username" type="text" placeholder="username">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="password">密码 : </label>
+                            <div class="col-sm-6">
+                                <input id="password" class="form-control" name="password" type="text" placeholder="password">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">姓名 : </label>
+                            <div class="col-sm-6">
+                                <input id="name" class="form-control" name="name" type="text" placeholder="name">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">邮箱 : </label>
+                            <div class="col-sm-6">
+                                <input id="email" class="form-control" name="email" type="email" placeholder="email">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-sm btn-green" type="submit" value="提交">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

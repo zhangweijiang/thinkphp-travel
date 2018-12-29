@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>举报管理</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="table-checkbox">
+                                    <label>ID</label>
+                                </th>
+                                <th class="admin-id">
+                                    <label>举报者</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>举报类型</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>举报内容</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>标题</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>类型</label>
+                                </th>
+                                <th class="last-login">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {foreach $report_list as $v}
+                            <tr>
+                                <td>
+                                    {$v.id}
+                                </td>
+                                <td>{$v.member_name}</td>
+                                <td>{$v.report_type}</td>
+                                <td>{$v.content}</td>
+                                <td>{$v.title}</td>
+                                <td>{$v.type1}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" href="/admin/report/delete?id={$v.id}" type="button"><i class="fa fa-trash"></i>删除</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+</body>
+</html>

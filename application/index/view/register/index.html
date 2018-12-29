@@ -1,0 +1,60 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+<div class="content register">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="edit-info">
+                        <div class="col-sm-offset-1 col-sm-6">
+                            <form class="form-horizontal" method="post" action="{:url('register/index')}">
+                                <div class="form-group">
+                                    <p class="register-title">注册帐号</p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <small class="text-danger">{$error|default=''}</small>
+                                        <input name="email" class="form-control" type="text" placeholder="电子邮箱（帐号)" value="{$email|default=''}">
+                                        <small class="text-danger">{$validate.email|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input name="nickname" class="form-control" type="text" placeholder="昵称"value="{$nickname|default=''}">
+                                        <small class="text-danger">{$validate.nickname|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input name="password" class="form-control" type="password" placeholder="登录密码">
+                                        <small class="text-danger">{$validate.password|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input name="repassword" class="form-control" type="password" placeholder="重复登录密码">
+                                        <small class="text-danger">{$validate.repassword|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label form-control-label"></label>
+                                    <div class="col-sm-12">
+                                        <input class="btn btn-info" type="submit" value="注册新帐号" >
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                            <a class="to-login" href="{:url('login/index')}">已有帐号？去登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+{/block}

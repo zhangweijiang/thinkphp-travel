@@ -1,0 +1,167 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .no-photos {
+        margin-bottom: 30px;
+        padding: 0 15px;
+        color: #666;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="space-banner">
+    <div class="space-banner-inner container">
+        <div class="space-face">
+            <a href="{:url('ucenter/index?id='.$member.id)}" class="user-face">
+                <img src="{$member.avatar==null?'/static/images/guitar.jpg':$member.avatar}" alt="叶" class="pic img-circle img-thumbnail">
+                <i class="light"></i>
+            </a>
+        </div>
+        <div class="space-intro">
+            <h1 class="user-name"><a href="{:url('ucenter/index?id='.$member.id)}">{$member.nickname}</a></h1>
+            <p class="space-ext">
+                <span class="fa fa-genderless">{$member.sex == 0 ? '保密':($member.sex == 1 ? '男' : '女') }</span>
+            </p>
+        </div>
+        <div class="space-description"></div>
+        <div class="space-console">
+            {if condition="$isMe eq 1"}
+            <a href="{:url('ucenter/profile')}">» 修改资料</a>
+            {else/}
+            <a id="message-btn" href="#" data-toggle="modal" data-target=".modal"><b class="fa fa-envelope"></b><span>发私信</span></a>
+            {/if}
+        </div>
+    </div>
+</div>
+
+<div class="content space">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>{$itineraryNum|default=0} 旅程</strong>
+                        <a class="hidden pull-right" href="{:url('ucenter/photo?id='.$member.id)}">
+                            <small>照片墙</small>
+                        </a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {notempty name="itinerarys"}
+                    {volist name="itinerarys" id="itinerary"}
+                    <div class="col-sm-6">
+                        <div class="trip-item">
+                            <a class="trip-cover" href="{:url('itinerary/detail',['id'=>$itinerary.id])}"><img src="{$Think.const.PUBLIC_STATIC_PATH}/images/banner0.jpg" alt=""></a>
+                            <div class="trip-item-inner">
+                                <a class="trip-item-title" href="{:url('itinerary/detail',['id'=>$itinerary.id])}">{$itinerary.title|default=''}</a>
+                                <div class="trip-info">
+                                    <p class="trip-date">
+                                        <span class="fa fa-clock-o"></span>{$itinerary.start_time|default=''} -
+                                        {$itinerary.end_time|default=''}
+                                    </p>
+                                    <p class="trip-comment">
+                                        <span class="fa fa-comments"></span>{$itinerary.commentNum|default=''}
+                                    </p>
+                                    <p class="trip-like">
+                                        <span class="fa fa-heart"></span>{$itinerary.likeNum|default=''}
+                                    </p>
+                                    <p class="trip-hit">
+                                        <span class="fa fa-mouse-pointer"></span>{$itinerary.click_num|default=''}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                    {else/}
+                    <p class="no-photos">暂时还没有发布过行程单！</p>
+                    {/notempty}
+                </div>
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>{$travelNum|default=0} 游记</strong>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {notempty name="travels"}
+                    {volist name="travels" id="travel"}
+                    <div class="col-sm-6">
+                        <div class="trip-item">
+                            <a class="trip-cover" href="{:url('travel/detail',['id'=>$travel.id])}"><img src="{$Think.const.PUBLIC_STATIC_PATH}/images/banner0.jpg" alt=""></a>
+                            <div class="trip-item-inner">
+                                <a class="trip-item-title" href="{:url('travel/detail',['id'=>$travel.id])}">{$travel.title|default=''}</a>
+                                <div class="trip-info">
+                                    <p class="trip-date">
+                                        <span class="fa fa-clock-o"></span>{$travel.create_time|default=''}
+                                    </p>
+                                    <p class="trip-comment">
+                                        <span class="fa fa-comments"></span>{$travel.commentNum|default=''}
+                                    </p>
+                                    <p class="trip-like">
+                                        <span class="fa fa-heart"></span>{$travel.likeNum|default=''}
+                                    </p>
+                                    <p class="trip-hit">
+                                        <span class="fa fa-mouse-pointer"></span>{$travel.viewNum|default=''}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                    {else/}
+                    <p class="no-photos">暂时还没有写过游记呦~</p>
+                    {/notempty}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">发送私信</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <div class="form-group">
+                            <textarea class="form-control" name="content" id="content" rows="5" required placeholder="请输入私信内容"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendMessage" data-id="{$member.id}" type="button" class="btn btn-primary">发送</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+{/block}
+{block name="script"}
+<script>
+    $("#sendMessage").on('click', function () {
+        var id = $(this).data('id');
+        $.ajax({
+            type: "post",
+            url: "{:url('message_center/sendMessage')}",
+            data: {'message': $("#content").val(),'id':id},
+            success: function (data) {
+                $("#content").val("");
+                $('#modal').modal('hide');
+                if (data.flag) {
+                    swal(data.message, "", "success");
+                } else {
+                    swal(data.message, "", "false");
+                }
+            }
+        })
+    });
+</script>
+{/block}

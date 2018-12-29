@@ -1,0 +1,66 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+<div class="content login">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="edit-info">
+                        <div class="col-sm-offset-1 col-sm-6">
+                            <form class="form-horizontal" method="post" action="{:url('login/index')}">
+                                <div class="form-group">
+                                    <p class="register-title">帐号登录</p>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <small class="text-danger">{$error|default=''}</small>
+                                        <input name="email" class="form-control" type="text" placeholder="电子邮箱（帐号)" value="{$email|default=''}">
+                                        <small class="text-danger">{$validate.email|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input name="password" class="form-control" type="password" placeholder="登录密码">
+                                        <small class="text-danger">{$validate.password|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <input name="captcha_code" class="form-control" type="text" placeholder="验证码" style="width: 100%" >
+                                    </div>
+                                    <div class="col-sm-6" >
+                                        <a href="#" onclick="refreshVerify()">
+                                            <img class="verify-img" src="{:captcha_src()}" alt="验证码" />
+                                        </a>
+                                        <small class="text-danger">{$validate.captcha_code|default=''}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label form-control-label"></label>
+                                    <div class="col-sm-12">
+                                        <input id="btn-login" class="btn btn-info" type="submit" value="登录">
+                                        <a class="password-forget" href="{:url('forget/index')}">忘记密码？</a>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                            <a class="to-register" href="{:url('register/index')}">还没有帐号？立即注册</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    function refreshVerify() {
+        var ts = Date.parse(new Date()) / 1000;
+        $(".verify-img").attr('src', '/captcha?id=' + ts);
+    }
+</script>
+{/block}

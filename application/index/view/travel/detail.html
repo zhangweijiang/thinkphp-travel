@@ -1,0 +1,234 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .radio-inline {
+        margin: 10px;
+        margin-top: 0;
+    }
+</style>{/block}
+{block name="body"}
+<div class="content travel-list travel-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="panel travel-inner">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{:url('ucenter/index?id='.$travel.author)}"><img src="{$travel.author_avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                                </div>
+                                <div class="media-body">
+                                    <h3 class="media-heading">
+                                        {$travel.title}
+                                    </h3>
+                                    <div class="travel-info">
+                                        <p class="travel-user">
+                                            <span class="fa fa-user"></span><a href="{:url('ucenter/index?id='.$travel.author)}">{$travel.author_name}</a>
+                                        </p>
+                                        <p class="travel-time">
+                                            <span class="fa fa-clock-o"></span>{$travel.create_time}
+                                        </p>
+                                        <p class="travel-comments">
+                                            <span class="fa fa-comments"></span>评论：{$travel.commentNum}
+                                        </p>
+                                        <p class="travel-hit" title="浏览数">
+                                            <span class="fa fa-eye"></span>浏览：{$travel.viewNum}
+                                        </p>
+                                        <p class="travel-like-num">
+                                            <span class="fa fa-heart"></span> {$travel.likeNum}
+                                        </p>
+                                        {if condition="$travel.author==$Think.session.user.id"}
+                                        <p><a href="{:url('travel/edit?id='.$travel.id)}"><i class="fa fa-edit"></i></a></p>
+                                        {else/}
+                                        {/if}
+                                        {if condition="$travel.author==$Think.session.user.id"}
+                                        {else/}
+                                        <p> <a id="message-btn" href="#" data-toggle="modal" data-target=".modal"><b class="fa fa-warning"></b><span>举报</span></a></p>
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <a id="like" class="travel-like {$travel.like == 1?'active':''}" data-id="{$travel.id}" href="javascript:;"><i class="fa fa-heart" title="喜欢"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="travel-content">
+                            {$travel.content}
+                        </div>
+                        <div class="travel-tags">
+                            <i class="fa fa-tags"></i>
+                            {volist name="travel.tags" id="tag"}
+                            <span>{$tag}</span>
+                            {/volist}
+                        </div>
+                    </div>
+                    <div class="travel-comments">
+                        <h3 class="comment-title">
+                            共有{$travel.commentNum}条回复
+                        </h3>
+                        <div class="travel-comments-inner">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="reply-comment main">
+                                        <form method="post" action="{:url('travel/comment?travel_id='.$travel.id.'&comment_pid=0')}">
+                                            <textarea class="form-control" name="content" cols="30" rows="3" placeholder="回复评论" required></textarea>
+                                            <input class="btn btn-info btn-reply" type="submit" value="回复">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {volist name="travel.comments" id='comment'}
+                            <div class="media {$comment.pid ? 'child': ''} ">
+                                <div class="media-left p-25">
+                                    <a href="#"><img src="{$comment.avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                                </div>
+                                <div class="media-body">
+                                    {if condition="($comment.member_pid eq 0)"}
+                                    <h4 class="media-heading">
+                                        <a href="{:url('ucenter/index?id='.$comment.member_id)}">{$comment.nickname}</a><span class="pull-right">{$comment.create_time}</span>
+                                    </h4>
+                                    {else/}
+                                    <h4 class="media-heading">
+                                        <a href="{:url('ucenter/index?id='.$comment.member_id)}">{$comment.nickname}</a><span> 回复 <a href="{:url('ucenter/index?id='.$comment.member_pid)}">{$comment.pnickname}</a></span><span class="pull-right">{$comment.create_time}</span>
+                                    </h4>
+                                    {/if}
+                                    <div class="comment-info">
+                                        <p class="comment-content">
+                                            {$comment.content}
+                                        </p>
+                                    </div>
+                                    <div class="comment-info">
+                                        <span class="reply pull-right" href="#">回复</span>
+                                    </div>
+                                    <div class="reply-comment">
+                                        <form method="post" action="{:url('travel/comment?travel_id='.$travel.id.'&comment_pid='.$comment.id)}">
+                                            <textarea class="form-control" name="content" cols="30" rows="3" placeholder="回复评论" required></textarea>
+                                            <input class="btn btn-info btn-reply" type="submit" value="回复">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {/volist}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="sidebar">
+                    <div class="travel-create">
+                        <a class="btn btn-danger center-block" href="{:url('travel/add')}">发布游记</a>
+                    </div>
+                    <div class="panel travel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">最新发布</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                {volist name="travelNew" id="new"}
+                                <li><a href="{:url('travel/detail?id='.$new.id)}">{$new.title}</a></li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel tags">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">最热门目的</h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="#">厦门</a>
+                            <a href="#">上海</a>
+                            <a href="#">海南</a>
+                            <a href="#">云南</a>
+                            <a href="#">旧金山</a>
+                            <a href="#">泰国</a>
+                            <a href="#">韩国</a>
+                            <a href="#">日本</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">举报</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <div class="form-group">
+                            <input type="hidden" value="{$travel.id}" id="report_id">
+                            {foreach $report_type as $key=>$v}
+                                {if $key==0}
+                            <label class="radio-inline">
+                                    <input type="radio" value="{$v.id}" class="report_type" checked="checked" name="radio1">{$v.name}
+                            </label>
+                                    {else}
+                                <label class="radio-inline">
+                                     <input type="radio" value="{$v.id}" class="report_type" name="radio1">{$v.name}
+                                </label>
+                                {/if}
+                            {/foreach}
+                            <textarea class="form-control" name="content" id="content" rows="4" required placeholder="请输入举报内容"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendMessage" type="button" class="btn btn-primary submit">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+{/block}
+
+{block name="script"}
+<script>
+    $(".reply").on('click', function () {
+        $(this).parent().parent().parent().children().children(".reply-comment").toggle('fast');
+    });
+    $("#like").on('click',function () {
+        $.ajax({
+            type:'post',
+            url: "{:url('travel/travelLike')}",
+            data: {id:$(this).data("id")},
+            success: function (data) {
+                if(data.flag){
+                    $("#like").addClass("active");
+                }
+            }
+        });
+    });
+
+    $('.submit').on('click',function(){
+        var report_type=$('.report_type:checked').val();
+        var report_id=$('#report_id').val();
+        var content=$('#content').val();
+        $.ajax({
+            url:"{:url('travel/report')}",
+            type:'post',
+            dataType:'json',
+            data:{report_type:report_type,type:2,report_id:report_id,content:content},
+            success:function(data){
+                if(data.flag==true){
+                    alert('举报成功');
+                    $('#modal').modal('hide');
+
+                }
+            }
+        })
+    });
+</script>
+{/block}

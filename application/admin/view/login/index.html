@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>后台登录</title>
+    <meta name="author" content="DeathGhost"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/login.css" tppabs="css/style.css"/>
+    <style>
+        body { height: 100%; background: #16a085; overflow: hidden; }
+        canvas { z-index: -1; position: absolute; }
+    </style>
+
+</head>
+<body>
+<dl class="admin_login">
+    <dt>
+        <strong>站点后台管理系统</strong>
+        <em>Management System</em>
+    </dt>
+    <form method="post" action="{:url('login/index')}">
+        <dd class="user_icon">
+            <input type="text" placeholder="账号" class="login_txtbx" name="username" value="{$username|default=''}"/>
+            <span class="text-danger">{$validate.username|default=''}</span>
+        </dd>
+        <dd class="pwd_icon">
+            <input type="password" placeholder="密码" class="login_txtbx" name="password"/>
+            <span class="text-danger">{$validate.password|default=''}</span>
+        </dd>
+        <dd class="val_icon">
+            <div class="checkcode" style="width:100px;float:left;">
+                <input type="text" name="captcha_code" id="J_codetext" placeholder="验证码" class="login_txtbx">
+                <small class="text-danger">{$validate.captcha_code|default=''}</small>
+            </div>
+            <a href="#" onclick="refreshVerify()" style="float:right;">
+                <img class="verify-img" src="{:captcha_src()}" alt="验证码"/>
+            </a>
+        </dd>
+        <dd>
+            <input type="submit" value="立即登陆" class="submit_btn"/>
+            <span class="text-danger">{$error|default=''}</span>
+        </dd>
+    </form>
+    <dd>
+        <p>© 2016 <a href="#">Hades's Blog</a>All Rights Reserved / Theme By<a href="#">Gallonce</a></p>
+
+    </dd>
+</dl>
+
+<script src="/static/js/jquery.min.js"></script>
+<script>
+    function refreshVerify() {
+        var ts = Date.parse(new Date()) / 1000;
+        $(".verify-img").attr('src', '/captcha?id=' + ts);
+    }
+</script>
+</body>
+</html>

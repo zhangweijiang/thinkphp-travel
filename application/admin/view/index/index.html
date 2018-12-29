@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>首页</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden;">
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="nav-close">
+            <i class="fa fa-times-circle"></i>
+        </div>
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                <li class="center-block logo-profile">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img class="img-responsive" src="/static/images/logo.png" alt="">
+
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="/admin/index/dashboard">
+                        <i class="fa fa-dashboard"></i>
+                        <span class="nav-label">控制台</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span class="nav-label">管理员设置</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="{:url('admin/index')}">管理员列表</a></li>
+                        <li><a class="J_menuItem" href="{:url('auth_group/index')}">用户组列表</a></li>
+                        <li><a class="J_menuItem" href="{:url('auth_rule/index')}">权限列表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-leaf"></i>
+                        <span class="nav-label">前台数据</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="{:url('travel/index')}">游记列表</a></li>
+                        <li><a class="J_menuItem" href="{:url('itinerary/index')}">行程单列表</a></li>
+                        <li><a class="J_menuItem" href="{:url('member/index')}">用户列表</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-desktop"></i>
+                        <span class="nav-label">网站管理</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="{:url('menu/index')}">菜单管理</a></li>
+                        <li><a class="J_menuItem" href="{:url('channel/index')}">导航管理</a></li>
+                        <li><a class="J_menuItem" href="{:url('config/index')}">配置管理</a></li>
+                        <li><a class="J_menuItem" href="{:url('config/group')}">网站设置</a></li>
+                        <li><a class="J_menuItem" href="{:url('report/notice')}">举报管理</a></li>
+                        <li><a class="J_menuItem" href="{:url('report_type/index')}">举报类型</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-database"></i>
+                        <span class="nav-label">数据备份</span>
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="/admin/database/index?type=export">数据备份</a></li>
+                        <li><a class="J_menuItem" href="/admin/database/index?type=import">数据还原</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0;">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-info" href="#"><i class="fa fa-bars"></i></a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a id="user" class="dropdown-toggle count-info" href="#" data-toggle="dropdown">
+                            <i class="fa fa-user"></i><strong>hades</strong><i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu animated fadeInLeft">
+                            <li class="user-profile">
+                                <div class="user-avatar">
+                                    <img class="img-circle" src="/static/images/avatar.jpg"
+                                         alt="">
+                                </div>
+                                <h6>张伟江</h6>
+                                <span class="text-danger small">超级管理员</span>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">个人资料</a></li>
+                            <li><a href="#">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/admin/index/loginOut">安全退出</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="text-danger" href="/admin/index/loginOut">
+                            <i class="fa fa-sign-out"></i><span>退出</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row content-tabs">
+            <button class="roll-nav roll-left J_tabLeft"><i class="fa fa-backward"></i></button>
+            <nav class="page-tabs J_menuTabs">
+                <div class="page-tabs-content">
+                    <a class="active J_menuTab" href="javascript:;" data-index="0"
+                       data-id="/admin/index/dashboard">控制台</a>
+                </div>
+            </nav>
+            <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i></button>
+            <button class="roll-nav roll-right J_tabRefresh"><i class="fa fa-refresh"></i></button>
+            <div class="btn-group roll-nav roll-right">
+                <button class="dropdown J_tabClose" data-toggle="dropdown">关闭操作 <span class="fa fa-caret-down"></span>
+                </button>
+                <ul class="dropdown-menu tab-close" role="menu">
+                    <li><a class="J_tabShowActive" href="javascript:;">定位当前选项卡</a></li>
+                    <li class="divider"></li>
+                    <li><a class="J_tabCloseOther" href="javascript:;">关闭其他选项卡</a></li>
+                    <li><a class="J_tabCloseAll" href="javascript:;">关闭所有选项卡</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row J_mainContent" id="main-content">
+            <iframe class="J_iframe" name="iframe0" height="100%" width="100%" src="/admin/index/dashboard"
+                    data-id="/admin/index/dashboard"
+                    frameborder="0" seamless></iframe>
+        </div>
+        <div class="footer">
+            <div class="pull-right"> © 2017<a href="#"> Hades's Blog</a> All Rights Reserved / Theme <a href="#"> By
+                Gallonce</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/plugins/jquery.metisMenu.js"></script>
+<script src="/static/js/plugins/jquery.slimscroll.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+
+<script type="text/javascript">
+    function NavToggle(){$(".navbar-minimalize").trigger("click")}function SmoothlyMenu(){$("body").hasClass("mini-navbar")?$("body").hasClass("fixed-sidebar")?($("#side-menu").hide(),setTimeout(function(){$("#side-menu").fadeIn(500)},300)):$("#side-menu").removeAttr("style"):($("#side-menu").hide(),setTimeout(function(){$("#side-menu").fadeIn(500)},100))}function iTabs(){$(".J_menuItem").each(function(t){$(this).attr("data-index")||$(this).attr("data-index",t)});$(".J_menuItem").on("click",addTab);$(".J_menuTabs").on("click",".J_menuTab",selectTab);$(".J_menuTabs").on("click",".J_menuTab i",closeTab);$(".J_tabLeft").on("click",moveTabsLeft);$(".J_tabRight").on("click",moveTabsRight);$(".J_tabRefresh").on("click",refreshTab);$(".J_tabShowActive").on("click",showActiveTab);$(".J_tabCloseOther").on("click",closeOtherTabs);$(".J_tabCloseAll").on("click",closeAllTabs)}function countWidth(element){var count=0;return $(element).each(function(){count+=$(this).outerWidth(true)}),count}function moveTabs(element){var prevWidth=countWidth($(element).prevAll());var nextWidth=countWidth($(element).nextAll());var buttonsWidth=countWidth($(".content-tabs").children().not(".J_menuTabs"));var tabsWidth=$(".content-tabs").outerWidth()-buttonsWidth;var moveWidth=0;if($(".page-tabs-content").outerWidth()<tabsWidth){moveWidth=0}else{if(nextWidth<=tabsWidth-$(element).outerWidth(true)-$(element).next().outerWidth(true)){if(tabsWidth-$(element).next().outerWidth(true)>nextWidth){moveWidth=prevWidth;for(var i=element;moveWidth-$(i).outerWidth()>$(".page-tabs-content").outerWidth()-tabsWidth;){moveWidth-=$(i).prev().outerWidth();i=$(i).prev()}}}else{prevWidth>tabsWidth-$(element).outerWidth(true)-$(element).prev().outerWidth(true)&&(moveWidth=prevWidth-$(element).prev().outerWidth(true))}}$(".page-tabs-content").animate({marginLeft:0-moveWidth+"px"},"fast")}function moveTabsLeft(){var currentWidth=Math.abs(parseInt($(".page-tabs-content").css("margin-left")));var buttonsWidth=countWidth($(".content-tabs").children().not(".J_menuTabs"));var tabsWidth=$(".content-tabs").outerWidth()-buttonsWidth;var moveWidth=0;if($(".page-tabs-content").width()<tabsWidth){return !1}for(var s=$(".J_menuTab:first"),r=0;r+$(s).outerWidth(true)<=currentWidth;){r+=$(s).outerWidth(true);s=$(s).next()}if(r=0,countWidth($(s).prevAll())>tabsWidth){for(;r+$(s).outerWidth(true)<tabsWidth&&s.length>0;){r+=$(s).outerWidth(true);s=$(s).prev()}moveWidth=countWidth($(s).prevAll())}$(".page-tabs-content").animate({marginLeft:0-moveWidth+"px"},"fast")}function moveTabsRight(){var currentWidth=Math.abs(parseInt($(".page-tabs-content").css("margin-left")));var buttonsWidth=countWidth($(".content-tabs").children().not(".J_menuTabs"));var tabsWidth=$(".content-tabs").outerWidth()-buttonsWidth;var moveWidth=0;if($(".page-tabs-content").width()<tabsWidth){return !1}for(var s=$(".J_menuTab:first"),r=0;r+$(s).outerWidth(true)<=currentWidth;){r+=$(s).outerWidth(true);s=$(s).next()}for(r=0;r+$(s).outerWidth(true)<tabsWidth&&s.length>0;){r+=$(s).outerWidth(true);s=$(s).next()}moveWidth=countWidth($(s).prevAll());moveWidth>0&&$(".page-tabs-content").animate({marginLeft:0-moveWidth+"px"},"fast")}function addTab(){var id=$(this).attr("href"),a=$(this).data("index"),text=$.trim($(this).text()),flag=!0;if(void 0==id||0==$.trim(id).length){return !1}if($(".J_menuTab").each(function(){return $(this).data("id")==id?($(this).hasClass("active")||$(this).addClass("active").siblings(".J_menuTab").removeClass("active"),$(".J_mainContent .J_iframe").each(function(){return $(this).data("id")==id?($(this).show().siblings(".J_iframe").hide(),!1):void 0}),flag=!1,!1):void 0}),flag){var tab="<a class='active J_menuTab' href='javascript:;' data-id='"+id+"'>"+text+"<i class='fa fa-times-circle'></i></a>";var iframe="<iframe class='J_iframe' name='iframe"+a+"' height='100%' width='100%' src='"+id+"' data-id='"+id+"' frameborder='0' seamless></iframe>";$(".J_mainContent").find(".J_iframe").hide().parents(".J_mainContent").append(iframe);$(".J_menuTab").removeClass("active");$(".J_menuTabs .page-tabs-content").append(tab)}moveTabs($(".J_menuTab.active"));return !1}function selectTab(){var id=$(this).data("id");$(this).hasClass("active")?void 0:$(this).addClass("active").siblings(".J_menuTab").removeClass("active");$(".J_mainContent .J_iframe").each(function(){return $(this).data("id")==id?$(this).show().siblings(".J_iframe").hide():void 0});moveTabs(this)}function closeTab(){var id=$(this).parent(".J_menuTab").data("id");if($(this).parent(".J_menuTab").hasClass("active")){if($(this).parent(".J_menuTab").next(".J_menuTab").size()){var nextId=$(this).parent(".J_menuTab").next(".J_menuTab:eq(0)").data("id");$(this).parent(".J_menuTab").next(".J_menuTab:eq(0)").addClass("active");$(this).parent(".J_menuTab").remove();$(".J_mainContent .J_iframe[data-id='"+id+"']").remove();$(".J_mainContent .J_iframe").each(function(){return $(this).data("id")==nextId?($(this).show().siblings(".J_iframe").hide()):void 0})}if($(this).parent(".J_menuTab").prev(".J_menuTab").size()){var prevId=$(this).parent(".J_menuTab").prev(".J_menuTab:last").data("id");
+        $(this).parent(".J_menuTab").prev(".J_menuTab:last").addClass("active");$(this).parent(".J_menuTab").remove();$(".J_mainContent .J_iframe[data-id='"+id+"']").remove();$(".J_mainContent .J_iframe").each(function(){return $(this).data("id")==prevId?($(this).show().siblings(".J_iframe").hide()):void 0})}}else{$(this).parent(".J_menuTab").remove();$(".J_mainContent .J_iframe").each(function(){return $(this).data("id")==id?($(this).remove()):void 0})}moveTabs($(".J_menuTab.active"));return !1}function refreshTab(){var id=$(".J_menuTab.active").data("id");var iframe=$(".J_mainContent .J_iframe[data-id='"+id+"']");var src=iframe.attr("src");iframe.attr("src",src)}function showActiveTab(){moveTabs($(".J_menuTab.active"))}function closeOtherTabs(){$(".page-tabs-content").children(".J_menuTab").not(":first").not(".active").each(function(){$(".J_mainContent .J_iframe[data-id='"+$(this).data("id")+"']").remove(),$(this).remove()});$(".page-tabs-content").css("margin-left","0")}function closeAllTabs(){$(".page-tabs-content").children(".J_menuTab").not(":first").each(function(){$(".J_mainContent .J_iframe[data-id='"+$(this).data("id")+"']").remove(),$(this).remove()}),$(".page-tabs-content").children(".J_menuTab:first").each(function(){$(".J_mainContent .J_iframe[data-id='"+$(this).data("id")+"']").show(),$(this).addClass("active")});$(".page-tabs-content").css("margin-left","0")}(function($){$(function(){$("#side-menu").metisMenu(),$(".sidebar-collapse").slimScroll({height:"100%",railOpacity:0.9,alwaysVisible:!1}),$(".navbar-minimalize").click(function(){$("body").toggleClass("mini-navbar"),SmoothlyMenu()}),$("#side-menu>li").click(function(){$("body").hasClass("mini-navbar")&&NavToggle()}),$(window).bind("load resize",function(){$(this).width()<769&&($("body").addClass("mini-navbar"),$(".navbar-static-side").fadeIn())}),iTabs()})})(jQuery);
+
+    /*function NavToggle() {
+        $(".navbar-minimalize").trigger("click")
+    }
+    function SmoothlyMenu() {
+        $("body").hasClass("mini-navbar") ? $("body").hasClass("fixed-sidebar") ? ($("#side-menu").hide(), setTimeout(function () {
+                    $("#side-menu").fadeIn(500);
+                }, 300)) : $("#side-menu").removeAttr("style") : ($("#side-menu").hide(), setTimeout(function () {
+                $("#side-menu").fadeIn(500);
+            }, 100))
+    }
+
+    /!*----选项卡组件JS-----*!/
+    function iTabs() {
+        $(".J_menuItem").each(function (t) {
+            $(this).attr("data-index") || $(this).attr("data-index", t);
+        });
+        $(".J_menuItem").on('click', addTab); //绑定添加并显示选项卡事件
+        $(".J_menuTabs").on('click', ".J_menuTab", selectTab);//绑定选项卡选中事件
+        $(".J_menuTabs").on('click', ".J_menuTab i", closeTab);//绑定选项卡关闭事件
+        $(".J_tabLeft").on('click', moveTabsLeft);//绑定选项卡列表左移事件
+        $(".J_tabRight").on('click', moveTabsRight);//绑定选项卡列表右移事件
+        $(".J_tabRefresh").on('click', refreshTab);//绑定刷新选项卡事件
+        $(".J_tabShowActive").on('click', showActiveTab);//绑定定位选项卡事件
+        $(".J_tabCloseOther").on('click', closeOtherTabs);//绑定关闭其他选项卡事件
+        $(".J_tabCloseAll").on('click', closeAllTabs);//绑定关闭所有选项卡事件
+
+    }
+
+    function countWidth(element) { //计算选项卡列表的宽度
+        var count = 0;
+        return $(element).each(function () {
+            count += $(this).outerWidth(true);
+        }), count;
+    }
+
+    function moveTabs(element) { //选项卡列表移动
+        var prevWidth = countWidth($(element).prevAll());
+        var nextWidth = countWidth($(element).nextAll());
+        var buttonsWidth = countWidth($(".content-tabs").children().not(".J_menuTabs"));
+        var tabsWidth = $(".content-tabs").outerWidth() - buttonsWidth;
+        var moveWidth = 0;
+        if ($(".page-tabs-content").outerWidth() < tabsWidth) {
+            moveWidth = 0;
+        } else if (nextWidth <= tabsWidth - $(element).outerWidth(true) - $(element).next().outerWidth(true)) {
+            if (tabsWidth - $(element).next().outerWidth(true) > nextWidth) {
+                moveWidth = prevWidth;
+                for (var i = element; moveWidth - $(i).outerWidth() > $(".page-tabs-content").outerWidth() - tabsWidth;) {
+                    moveWidth -= $(i).prev().outerWidth();
+                    i = $(i).prev();
+                }
+            }
+        } else {
+            prevWidth > tabsWidth - $(element).outerWidth(true) - $(element).prev().outerWidth(true) && (moveWidth = prevWidth - $(element).prev().outerWidth(true));
+        }
+        $(".page-tabs-content").animate({marginLeft: 0 - moveWidth + "px"}, "fast");
+    }
+
+    function moveTabsLeft() {//选项卡列表左移
+
+        var currentWidth = Math.abs(parseInt($(".page-tabs-content").imgareaselect("margin-left")));
+        var buttonsWidth = countWidth($(".content-tabs").children().not(".J_menuTabs"));
+        var tabsWidth = $(".content-tabs").outerWidth() - buttonsWidth;
+        var moveWidth = 0;
+        if ($(".page-tabs-content").width() < tabsWidth) {
+            return !1;
+        }
+        for (var s = $(".J_menuTab:first"), r = 0; r + $(s).outerWidth(true) <= currentWidth;) {
+            r += $(s).outerWidth(true);
+            s = $(s).next();
+        }
+        if (r = 0, countWidth($(s).prevAll()) > tabsWidth) {
+            for (; r + $(s).outerWidth(true) < tabsWidth && s.length > 0;) {
+                r += $(s).outerWidth(true);
+                s = $(s).prev();
+            }
+            moveWidth = countWidth($(s).prevAll());
+        }
+        $(".page-tabs-content").animate({marginLeft: 0 - moveWidth + "px"}, "fast");
+    }
+
+    function moveTabsRight() {//选项卡列表右移
+        var currentWidth = Math.abs(parseInt($(".page-tabs-content").imgareaselect("margin-left")));
+        var buttonsWidth = countWidth($(".content-tabs").children().not(".J_menuTabs"));
+        var tabsWidth = $(".content-tabs").outerWidth() - buttonsWidth;
+        var moveWidth = 0;
+        if ($(".page-tabs-content").width() < tabsWidth) {
+            return !1;
+        }
+        for (var s = $(".J_menuTab:first"), r = 0; r + $(s).outerWidth(true) <= currentWidth;) {
+            r += $(s).outerWidth(true);
+            s = $(s).next();
+        }
+        for (r = 0; r + $(s).outerWidth(true) < tabsWidth && s.length > 0;) {
+            r += $(s).outerWidth(true);
+            s = $(s).next();
+        }
+        moveWidth = countWidth($(s).prevAll());
+        moveWidth > 0 && $(".page-tabs-content").animate({marginLeft: 0 - moveWidth + "px"}, "fast");
+
+    }
+
+
+    function addTab() {//添加并显示选项卡
+        var id = $(this).attr('href'), a = $(this).data('index'), text = $.trim($(this).text()), flag = !0;
+        if (void 0 == id || 0 == $.trim(id).length) return !1;
+        if ($(".J_menuTab").each(function () {
+                return $(this).data("id") == id ? ($(this).hasClass("active") || $(this).addClass("active").siblings(".J_menuTab").removeClass("active"), $(".J_mainContent .J_iframe").each(function () {
+                        return $(this).data("id") == id ? ($(this).show().siblings(".J_iframe").hide(), !1) : void 0
+                    }), flag = !1, !1) : void 0;
+            }), flag) {
+            var tab = "<a class='active J_menuTab' href='javascript:;' data-id='" + id + "'>" + text + "<i class='fa fa-times-circle'></i></a>";
+            var iframe = "<iframe class='J_iframe' name='iframe" + a + "' height='100%' width='100%' src='" + id + "' data-id='" + id + "' frameborder='0' seamless></iframe>";
+            $(".J_mainContent").find(".J_iframe").hide().parents(".J_mainContent").append(iframe);
+            $(".J_menuTab").removeClass("active");
+            $(".J_menuTabs .page-tabs-content").append(tab);
+        }
+        moveTabs($(".J_menuTab.active"));
+        return !1;
+    }
+
+    function selectTab() {//选中选项卡
+        var id = $(this).data("id");
+        $(this).hasClass("active") ? void 0 : $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
+        $(".J_mainContent .J_iframe").each(function () {
+            return $(this).data("id") == id ? $(this).show().siblings(".J_iframe").hide() : void 0;
+        });
+        moveTabs(this);
+    }
+
+    function closeTab() {//关闭选项卡
+        var id = $(this).parent(".J_menuTab").data("id");
+        if ($(this).parent(".J_menuTab").hasClass("active")) {
+            if ($(this).parent(".J_menuTab").next(".J_menuTab").size()) {
+                var nextId = $(this).parent(".J_menuTab").next(".J_menuTab:eq(0)").data("id");
+                $(this).parent(".J_menuTab").next(".J_menuTab:eq(0)").addClass("active");
+                $(this).parent(".J_menuTab").remove();
+                $(".J_mainContent .J_iframe[data-id='" + id + "']").remove();
+                $(".J_mainContent .J_iframe").each(function () {
+                    return $(this).data("id") == nextId ? ($(this).show().siblings(".J_iframe").hide()) : void 0;
+                });
+            }
+            if ($(this).parent(".J_menuTab").prev(".J_menuTab").size()) {
+                var prevId = $(this).parent(".J_menuTab").prev(".J_menuTab:last").data("id");
+                $(this).parent(".J_menuTab").prev(".J_menuTab:last").addClass("active");
+                $(this).parent(".J_menuTab").remove();
+                $(".J_mainContent .J_iframe[data-id='" + id + "']").remove();
+                $(".J_mainContent .J_iframe").each(function () {
+                    return $(this).data("id") == prevId ? ($(this).show().siblings(".J_iframe").hide()) : void 0;
+                });
+            }
+        } else {
+            $(this).parent(".J_menuTab").remove();
+            $(".J_mainContent .J_iframe").each(function () {
+                return $(this).data("id") == id ? ($(this).remove()) : void 0;
+            });
+        }
+
+        moveTabs($(".J_menuTab.active"));
+        return !1;
+    }
+
+    function refreshTab() {//刷新选项卡
+        var id = $(".J_menuTab.active").data("id");
+        var iframe = $(".J_mainContent .J_iframe[data-id='" + id + "']");
+        var src = iframe.attr("src");
+        iframe.attr("src", src);
+    }
+
+    function showActiveTab() {//定位当前选项卡
+        moveTabs($(".J_menuTab.active"));
+    }
+
+    function closeOtherTabs() {//关闭其他选项卡
+        $(".page-tabs-content").children(".J_menuTab").not(":first").not(".active").each(function () {
+            $(".J_mainContent .J_iframe[data-id='" + $(this).data("id") + "']").remove(), $(this).remove();
+        });
+        $(".page-tabs-content").imgareaselect("margin-left", "0");
+    }
+
+    function closeAllTabs() {//关闭所有选项卡
+        $(".page-tabs-content").children(".J_menuTab").not(":first").each(function () {
+            $(".J_mainContent .J_iframe[data-id='" + $(this).data("id") + "']").remove(), $(this).remove();
+        }), $(".page-tabs-content").children(".J_menuTab:first").each(function () {
+            $(".J_mainContent .J_iframe[data-id='" + $(this).data("id") + "']").show(), $(this).addClass("active");
+        });
+        $(".page-tabs-content").imgareaselect("margin-left", "0");
+    }
+
+    (function ($) {
+        $(function () {
+            $("#side-menu").metisMenu(
+            ), $(".sidebar-collapse").slimScroll({
+                height: "100%", railOpacity: .9, alwaysVisible: !1
+            }), $(".navbar-minimalize").click(function () {
+                $("body").toggleClass("mini-navbar"), SmoothlyMenu();
+            }), $("#side-menu>li").click(function () {
+                $("body").hasClass("mini-navbar") && NavToggle();
+            }), $(window).bind("load resize", function () {
+                $(this).width() < 769 && ($("body").addClass("mini-navbar"), $(".navbar-static-side").fadeIn())
+            }), iTabs();
+        });
+    })(jQuery);*/
+
+
+</script>
+</body>
+</html>

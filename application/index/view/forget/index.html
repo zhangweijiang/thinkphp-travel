@@ -1,0 +1,39 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+<div class="content forget">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-cog"></i>找回密码</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="edit-info">
+                        <form class="form-horizontal" method="post" action="{:url('forget/index')}">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label form-control-label">注册邮箱：</label>
+                                <div class="col-sm-3">
+                                    <input name="email" class="form-control" type="email" placeholder="例如：youname@eamil.com" required >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label form-control-label"></label>
+                                <div class="col-sm-2">
+                                    <input class="btn btn-info" type="submit" value="发送密码">
+                                </div>
+                                <small class="col-sm-2 text-danger form-control-label">{$error|default=''}</small>
+                            </div>
+                        </form>
+                    </div>
+                    <p>若您的注册邮箱存在，我们将发送重置的密码至您的邮箱，请注意查看！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+{/block}

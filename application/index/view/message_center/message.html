@@ -1,0 +1,122 @@
+{extend name="public/base" /}
+{block name="style"}
+
+{/block}
+{block name="body"}
+<div class="content messageCenter">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-volume-up"></i> 消息</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-2">
+                        <ul class="nav nav-pills nav-stacked text-center">
+                            <li role="presentation"><a href="{:url('message_center/comment')}">评论</a></li>
+                            <li role="presentation" class="active"><a href="{:url('message_center/message')}">私信</a>
+                            </li>
+                            <li role="presentation"><a href="{:url('message_center/notice')}">通知</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="sys-list">
+                                {notempty name="messages"}
+                                {volist name="messages" id="message"}
+                                <div class="media">
+                                    <div class="media-left p-25">
+                                        <a href="{:url('ucenter/index?id='.$message.member_id)}"><img src="{$message.avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{$message.content}</h4>
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                <a href="{:url('ucenter/index?id='.$message.member_id)}">{$message.nickname}</a>
+                                                私信了我
+                                            </p>
+                                            <p class="trip-date">
+                                                <i class="fa fa-clock-o"></i>
+                                                {$message.create_time}<a class="reply" href="javasript:;">回复</a>
+                                            </p>
+                                        </div>
+                                        <div class="reply-comment">
+                                            <textarea class="form-control" id="content" name="content" cols="30" rows="3" placeholder="回复" required></textarea>
+                                            <input class="reply-btn btn btn-info btn-reply" data-id="{$message.member_id}" type="submit" value="回复">
+                                        </div>
+                                    </div>
+                                    <div class="media-right">
+                                        <a class="del-notice text-info del-message" data-id="{$message.id}" href="javascript:;"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </div>
+                                {/volist}
+                                {else/}
+                                暂无私信信息！
+                                {/notempty}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $(".reply").on('click', function () {
+        $(this).parent().parent().parent().find(".reply-comment").toggle('fast');
+    });
+    $(".reply-btn").on('click', function () {
+        var replyArea = $(this).parent();
+        var id = $(this).data("id");
+        $.ajax({
+            type: "post",
+            url: "{:url('message_center/sendMessage')}",
+            data: {'message': $("#content").val(), 'id': id},
+            success: function (data) {
+                $("#content").val("");
+                replyArea.toggle('fast');
+                if (data.flag) {
+                    swal(data.message, "", "success");
+                } else {
+                    swal(data.message, "", "false");
+                }
+            }
+        })
+    });
+    $(".del-message").on('click', function () {
+        var id = $(this).data("id");
+        var parent = $(this).parent().parent();
+        swal({
+            title: "你确定要删除这条私信吗？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "是的，删除！",
+            cancelButtonText: "不，不删除!",
+            closeOnConfirm: false,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('message_center/delMessage')}",
+                    data: {'id': id},
+                    success: function (data) {
+                        parent.remove();
+                        if (data.flag) {
+                            swal(data.message, "", "success");
+                        } else {
+                            swal(data.message, "", "false");
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+
+</script>
+{/block}

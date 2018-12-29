@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>添加管理员</title>
+
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox ibox-inverse seo">
+
+                <div class="ibox-content">
+                    <a class="btn btn-sm btn-white" href="{$Think.cookie.__forward__}" >返回</a >
+                    <form class="form-horizontal" role="form" method="post" action="{:url()}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="title">导航标题 : </label>
+                            <div class="col-sm-6">
+                                <input id="title" class="col-sm-6 form-control" name="title" type="text" placeholder="用于显示的文字">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="url">导航链接 : </label>
+                            <div class="col-sm-6">
+                                <input id="url" class="form-control" name="url" type="text" placeholder="URL函数解析的链接">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">新窗口打开 : </label><!--是否新窗口打开链接-->
+                            <div class="col-sm-6">
+                                <select class="form-control" name="target" style="width: auto;">
+                                    <option value="0" {eq name="info.target" value="0" }selected{/eq}>否</option>
+                                    <option value="1" {eq name="info.target" value="1" }selected{/eq}>是</option>
+                                </select>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort" class="col-sm-2 control-label">优先级 : </label>
+                            <div class="col-sm-3">
+                                <input id="sort" class="form-control" name="sort" type="text" placeholder="导航显示顺序">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-sm btn-green" type="submit" value="提交">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

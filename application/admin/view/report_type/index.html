@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>举报管理</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="manager-list">
+                        <div class="col-md-4">
+                            <a class="btn btn-sm btn-info" href="javascript:void(0);" type="button" data-toggle="modal" data-target="#modal1"><i class="fa fa-add"></i>添加举报类型</a>
+                        </div>
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="table-checkbox">
+                                    <label>ID</label>
+                                </th>
+                                <th class="admin-id">
+                                    <label>类型</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>内容</label>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {foreach $report_type_list as $v}
+                            <tr>
+                                <td>{$v.id}</td>
+                                <td>{$v.name}</td>
+                                <td>{$v.content}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-white edit" href="javascript:void(0);" type="button" data-toggle="modal" data-target="#modal2" data_id="{$v.id}"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger" href="/admin/report_type/delete?id={$v.id}" type="button"><i class="fa fa-trash"></i>删除</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加-->
+<div id="modal1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">添加举报类型</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <div class="form-group">
+                            <p>类型: <input type="text" id="name"></p>
+                            <p>内容: <input type="text" id="content"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submit" type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--编辑-->
+<div id="modal2" class="modal  fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑举报类型</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <div class="form-group">
+                            <p>类型: <input type="text" id="name1"></p>
+                            <p>内容: <input type="text" id="content1"></p>
+                            <input type="hidden" id="id">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submit1" type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+<script>
+    /* 添加内容提交*/
+    $('#submit').click(function () {
+        var name = $('#name').val();
+        var content = $('#content').val();
+        $.ajax({
+            url: '/admin/report_type/add',
+            type: 'post',
+            dataType: 'text',
+            data: {name: name, content: content},
+            success: function (data) {
+                if (data > 0) {
+                    alert('举报类型添加成功！');
+                    window.location.reload();
+                } else {
+                    alert('举报类型添加失败！');
+                }
+            }
+        });
+    });
+
+    /* 编辑内容显示*/
+    $('.edit').click(function () {
+        var id = $(this).attr('data_id');
+        $.ajax({
+            url: '/admin/report_type/find',
+            type: 'post',
+            dataType: 'json',
+            data: {id: id},
+            success: function (data) {
+                $('#name1').val(data.name);
+                $('#content1').val(data.content);
+                $('#id').val(data.id);
+            }
+        });
+    });
+
+    /* 编辑内容提交*/
+    $('#submit1').click(function () {
+        var name = $('#name1').val();
+        var content = $('#content1').val();
+        var id = $('#id').val();
+        $.ajax({
+            url: '/admin/report_type/edit',
+            type: 'post',
+            dataType: 'text',
+            data: {name: name, content: content, id: id},
+            success: function (data) {
+
+                alert('举报类型编辑成功！');
+                window.location.reload();
+
+            }
+        });
+    });
+</script>
+</body>
+</html>

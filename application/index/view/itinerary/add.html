@@ -1,0 +1,86 @@
+{extend name="public/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+{/block}
+
+{block name="body"}
+<div class="content create">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="create-trip-title"></div>
+                    <div class="edit-info">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <form class="form-horizontal" method="post" action="{:url('itinerary/add')}">
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-label form-control-label">* 旅程标题</span>
+                                    <div class="col-sm-8">
+                                        <input name="title" class="trip-name form-control" type="text" placeholder="为你的旅行命个题吧.." required>
+                                    </div>
+                                    <span class="col-sm-2 text-danger form-control-label">{$validate.title|default=''}</span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-label form-control-label">* 出发日期</span>
+                                    <div class="col-sm-3">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input name="start_time" type='text' class="form-control" required/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="col-sm-2 text-danger form-control-label">{$validate.start_time|default=''}</span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-label form-control-label">* 结束日期</span>
+                                    <div class="col-sm-3">
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input name="end_time" type='text' class="form-control" required/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="col-sm-2 text-danger form-control-label">{$validate.end_time|default=''}</span>
+                                </div>
+                                <div class="form-group">
+                                    <span class="col-sm-2 control-label form-control-label"></span>
+                                    <div class="col-sm-10">
+                                        <input class="btn btn-info btn-next" type="submit" value="下一步">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+<script>
+    $('#datetimepicker1 input').val(new Date().toLocaleDateString());
+    $('#datetimepicker2 input').val(new Date().toLocaleDateString());
+    $('#datetimepicker1').datetimepicker({
+        startDate: new Date(),
+        autoclose: true,
+        minView: 'month',
+        format: 'yyyy/mm/dd',
+        initialDate: new Date(),
+    }).on("changeDate",function () {
+        $('#datetimepicker2').datetimepicker('setStartDate',$('#datetimepicker1 input').val());
+        $('#datetimepicker2 input').val($('#datetimepicker1 input').val()) ;
+        $('#datetimepicker2').datetimepicker('update');
+    })
+    $('#datetimepicker2').datetimepicker({
+        startDate: new Date(),
+        autoclose: true,
+        minView: 'month',
+        format: 'yyyy/mm/dd',
+    });
+</script>
+{/block}

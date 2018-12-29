@@ -1,0 +1,185 @@
+{extend name="public/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+<style>
+    .edit-info > div > .top {
+        overflow: hidden;
+        padding: 0 15px;
+    }
+    .edit-info > div > .top .btn {
+        border-radius: 0;
+        padding: 8px 12px;
+    }
+    .private:hover {
+        background-color: #fb1535;
+        border: 1px solid #fb1535;
+    }
+    .itinerary-title {
+        background: #ededed;
+        margin: 20px 0;
+        padding: 15px 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .members {
+        text-align: center;
+    }
+    .members > li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    .members > li > a {
+        overflow: hidden;
+    }
+    .members > li > p {
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+    }
+    .members > li > a > img {
+        height: 56px;
+        width: 56px;
+        margin-bottom: 5px;
+        border-radius: 50%;
+    }
+    .timepay {
+        margin: 10px 0;
+        overflow: hidden;
+        border-bottom: 1px solid #ededed;
+        padding-bottom: 10px;
+    }
+    .pay {
+        color: #05aeec;
+    }
+    .pay span {
+        color: #666;
+    }
+    .day {
+        border: 1px solid #ededed;
+    }
+    .light {
+        overflow: hidden;
+    }
+    .night {
+        overflow: hidden;
+        background: #d5eefa;
+    }
+    .day-title {
+        background: #31b0d5;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 0 10px 10px;
+        border: 1px solid #31b0d5;
+        color: #FFF;
+        margin-top: 0;
+    }
+    .day .form-group {
+        margin: 30px 0;
+        overflow: hidden;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="content create">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="edit-info">
+                        <div class="col-sm-12">
+                            <div class="top">
+                                <a class="btn btn-info" href="{:url('itinerary/detail?id='.$id)}"><span><i class="fa fa-eye"></i> 查看旅程</span></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <p id="edit-title" class="itinerary-title text-center">厦门</p>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="timepay">
+                                <span class="col-sm-1 control-label form-control-label">出发日期</span>
+                                <div class="col-sm-2">
+                                    <p class="control-label form-control-label">{$start_time}</p>
+                                </div>
+                                <span class="col-sm-1 control-label form-control-label">返程日期</span>
+                                <div class="col-sm-2">
+                                    <p class="control-label form-control-label">{$end_time}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-info">
+                        <form action="{:url('itinerary/save1')}" method="post">
+                            <input type="hidden" value="{$id}" name="id2">
+                            <div class="row">
+                                <div class="col-sm-offset-1 col-sm-10">
+                                        {foreach $itinerary as $key=>$value}
+                                        <div class="day">
+                                            <h3 class="day-title">第{$value.day}天</h3>
+                                            <div class="light">
+                                                <div class="form-group">
+                                                    <span class="col-sm-2 text-right control-label form-control-label">行程事件</span>
+                                                    <div class="col-sm-5">
+                                                        <input name="title[]" class="trip-name form-control" type="text" placeholder="景点/目的地/事件" required value="{$value.title}">
+                                                    </div>
+                                                    <div class="col-sm-2"></div>
+                                                    <span class="col-sm-1  text-right control-label form-control-label">费用</span>
+                                                    <div class="col-sm-2" style="overflow: hidden">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">￥</span>
+                                                            <input class="form-control" type="text" name="pay[]" value="{$value.pay}">
+                                                            <span class="input-group-addon">.00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="col-sm-2 text-right control-label form-control-label">行程描述</span>
+                                                    <div class="col-sm-8">
+                                                        <textarea class="form-control" name="description[]" id="description" rows="7" placeholder="简单描述一下今天的行程...">{$value.description}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="night">
+                                                <div class="form-group">
+                                                    <span class="col-sm-2 text-right control-label form-control-label">住宿</span>
+                                                    <div class="col-sm-5">
+                                                        <input name="title1[]" class="trip-name form-control" type="text" placeholder="酒店/旅舍/沙发？" required value="{$value.title1}">
+                                                    </div>
+                                                    <div class="col-sm-2"></div>
+                                                    <span class="col-sm-1  text-left control-label form-control-label">费用</span>
+                                                    <div class="col-sm-2">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">￥</span>
+                                                            <input class="form-control" type="text" name="pay1[]" value="{$value.pay1}">
+                                                            <span class="input-group-addon">.00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="col-sm-2 text-right control-label form-control-label">行程描述</span>
+                                                    <div class="col-sm-8">
+                                                        <textarea class="form-control" name="description1[]" id="description" rows="7" placeholder="简单描述一下住宿情况...">{$value.description1}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="{$value.id}" name="id[]">
+                                        <input type="hidden" value="{$value.id1}" name="id1[]">
+                                        {/foreach}
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <input  class="btn btn-info pull-right" type="submit" value="保存编辑">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+{/block}

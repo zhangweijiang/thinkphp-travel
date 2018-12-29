@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>管理员列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-md-4">
+                            <form action="{:url('admin/index')}" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="keyword" type="text" placeholder="登录名 / 邮箱 / 昵称" value="{if condition='isset($keyword)'}{$keyword}{/if}">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-green" type="submit">搜索</button>
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-info btn-sm" href="{:url('admin/add')}"><i class="fa fa-plus-circle"></i> 新增管理员</a>
+                        </div>
+                    </div>
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="admin-id">
+                                    <label>ID</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>登录名</label>
+                                </th>
+                                <th class="last-login">
+                                    <label>邮箱</label>
+                                </th>
+                                <th class="login-times">
+                                    <label>昵称</label>
+                                </th>
+                                <th class="create-time">
+                                    <label>创建时间</label>
+                                </th>
+                                <th class="update-time">
+                                    <label>更新时间</label>
+                                </th>
+                                <th class="operation">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {notempty name="list"}
+                            {volist  name="list" id="item"}
+                            <tr>
+                                <td>{$item['id']}</td>
+                                <td>{$item['username']}</td>
+                                <td>{$item['email']}</td>
+                                <td>{$item['nickname']}</td>
+
+                                <td>{$item['create_time']}</td>
+                                <td>{$item['update_time']}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-white ajax-get no-refresh" href="{:url('admin/add?id='.$item.id)}" type="button"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger ajax-get no-refresh" href="{:url('admin/delete?id='.$item.id)}" type="button"><i class="fa fa-remove"></i>删除</a>
+                                </td>
+
+                            </tr>
+                            {/volist}
+                            {else/}
+                            <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                        <div class="container-fluid">
+                            <div class="text-center">
+                                {$page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+
+<div class="content messageCenter">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-volume-up"></i> 消息</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-2">
+                        <ul class="nav nav-pills nav-stacked text-center">
+                            <li role="presentation" class="active"><a href="{:url('message_center/comment')}">评论</a></li>
+                            <li role="presentation"><a href="{:url('message_center/message')}">私信</a></li>
+                            <li role="presentation"><a href="{:url('message_center/notice')}">通知</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="comment-list">
+                                {notempty name="travelComments"}
+                                {foreach $travelComments as $travelComment}
+                                <div class="media">
+                                    <div class="media-left p-25">
+                                        <a href="{:url('ucenter/index?id='.$travelComment.member_id)}"><img src="{$travelComment.avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"> <span class="comment-con">{$travelComment.content}</span></h4>
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                <a href="{:url('ucenter/index?id='.$travelComment.member_id)}">{$travelComment.nickname}</a> 评论了我 <a href="{:url('travel/detail?id='.$travelComment.travel_id)}">《{$travelComment.title}》</a>
+                                            </p>
+                                        </div>
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                {$travelComment.create_time} <a class="reply" href="javasript:;">回复</a>
+                                            </p>
+                                        </div>
+                                        <div class="reply-comment">
+                                            <form method="post" action="{:url('travel/comment?travel_id='.$travelComment.travel_id.'&comment_pid='.$travelComment.member_id)}">
+                                                <textarea class="form-control" name="content" cols="30" rows="3" placeholder="回复评论" required></textarea>
+                                                <input class="btn btn-info btn-reply" type="submit" value="回复">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/foreach}
+                                {else/}
+                                暂无评论信息！
+                                {/notempty}
+
+                                {volist name="itineraryComments" id="itineraryComment"}
+                                <div class="media">
+                                    <div class="media-left p-25">
+                                        <a href="{:url('ucenter/index?id='.$itineraryComment.member_id)}"><img src="images/guitar.jpg" alt=""></a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading"> <span class="comment-con">{$itineraryComment.content}</span></h4>
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                <a href="{:url('ucenter/index?id='.$itineraryComment.member_id)}">{$itineraryComment.nickname}</a> 评论了我的 <a href="{:url('itinerary/detail?id='.$itineraryComment.itinerary_id)}">《{$itineraryComment.title}》</a>
+                                            </p>
+                                        </div>
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                {$itineraryComment.create_time} <a class="reply" href="javasript:;">回复</a>
+                                            </p>
+                                        </div>
+                                        <div class="reply-comment">
+                                            <form method="post" action="{:url('itinerary/comment?itinerary_id='.$itineraryComment.itinerary_id.'&comment_pid='.$itineraryComment.member_id)}">
+                                                <textarea class="form-control" name="content" cols="30" rows="3" placeholder="回复评论" required></textarea>
+                                                <input class="btn btn-info btn-reply" type="submit" value="回复">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/volist}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $(".reply").on('click',function () {
+        $(this).parent().parent().parent().find(".reply-comment").toggle('fast');
+    });
+</script>
+{/block}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>用户列表</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="admin-id">
+                                    <label>昵称</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>性别</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>生日</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>邮箱</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>状态</label>
+                                </th>
+                                <th class="last-login">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {foreach $member_list as $v}
+                            <tr>
+                                <td>{$v.nickname}</td>
+                                <td>{if $v.sex==0}保密{elseif $v.sex==1}男{else}女{/if}</td>
+                                <td>{$v.birthday}</td>
+                                <td>{$v.email}</td>
+                                <td>{if $v.status==0}禁用{elseif $v.status==1}正常{/if}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-danger" href="/admin/member/delete?id={$v.id}" type="button"><i class="fa fa-trash"></i>删除</a>
+                                    <a class="btn btn-sm btn-white" href="/admin/member/report?id={$v.id}&status={$v.status}" type="button"><i class="fa fa-warning"></i>{if
+                                        $v.status==0}正常{elseif $v.status==1}禁用{/if}</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+</body>
+</html>

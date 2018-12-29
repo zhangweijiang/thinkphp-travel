@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/font-awesome.css">
+    <link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/plugins/sweetalert.css">
+    {block name="style"}{/block}
+    <link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/home.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{:url('index/index')}" style="margin-top: -10px;font-size: 25px;font-weight: 600; overflow: hidden" ><img src="/static/images/logo.png" alt="" style="height:40px;"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav nav-custom">
+                <li class="index-active"><a href="{:url('index/index')}">首页 <span class="sr-only">(current)</span></a></li>
+                <li class="itinerary-active"><a href="{:url('itinerary/index')}">行程单</a></li>
+                <li class="travel-active"><a href="{:url('travel/index')}">游记</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                {notempty name="Think.session.user"}
+                <li class="dropdown dropdown-notice">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                        <i id="bell" class="fa fa-bell notice"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a id="comment" class="text-center" href="{:url('message_center/comment')}">查看评论</a></li>
+                        <li><a id="message" class="text-center" href="{:url('message_center/message')}">查看私信</a></li>
+                        <li><a id="notice" class="text-center" href="{:url('message_center/notice')}">查看通知</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown dropdown-avatar">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img class="avatar" src="{$Think.session.user.avatar==null?'/static/images/guitar.jpg':$Think.session.user.avatar}" alt="">
+                        <span class="username">{$Think.session.user.nickname}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{:url('ucenter/index?id='.$Think.session.user.id)}">我的旅程</a></li>
+                        <li><a href="{:url('ucenter/profile')}">资料设置</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{:url('logout')}">退出</a></li>
+                    </ul>
+                </li>
+                {else/}
+                <li><a class="btn btn-info btn-login" href="{:url('login/index')}">登录</a></li>
+                <li><a class="btn btn-link" href="{:url('register/index')}">注册</a></li>
+                {/notempty}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{block name="body">}{/block}
+<footer class="footer">
+    <div class="text-center">
+        <a href="#">关于友伴</a>
+        | <a href="#">帮助中心</a>
+        | <a href="#">意见反馈</a>
+        | <a href="#">联系我们</a>
+        | <a href="#">网站地图</a>
+        | <a href="#">法律声明</a>
+    </div>
+    <div class="copyright text-center">
+        © 2017 <a href="#">Hades's Blog</a>All Rights Reserved / Theme By<a href="#">Gallonce</a>
+    </div>
+</footer>
+<div id="back2top">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/jquery.min.js"></script>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/slide.js"></script>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/hplus.js"></script>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/plugins/sweetalert.min.js"></script>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/bootstrap.min.js"></script>
+{block name="script"}{/block}
+<script>
+    setInterval(hasMessage,500);
+    function hasMessage() {
+        $.ajax({
+            type: "post",
+            url: "{:url('hasMessage')}",
+            success: function (data) {
+                if (data.flag) {
+                    if ((data.messageNum + data.noticeNum + data.commentNum) > 0) {
+                        $("#bell").addClass('active');
+                        if(data.messageNum > 0){
+                            $("#message").text("新私信("+data.messageNum+"条)");
+                        } else {
+                            $("#message").text("查看私信");
+                        }
+                        if(data.noticeNum > 0){
+                            $("#notice").text("新通知("+data.noticeNum+"条)");
+                        }else {
+                            $("#notice").text("查看通知");
+                        }
+                        if(data.commentNum > 0){
+                            $("#comment").text("新评论("+data.commentNum+"条)");
+                        }else {
+                            $("#comment").text("查看评论");
+                        }
+                    }else{
+                        $("#bell").removeClass('active');
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

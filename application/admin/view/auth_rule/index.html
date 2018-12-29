@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/font-awesome.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/animate.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/style.css">
+    <style>
+
+
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li><a href="#">控制台</a></li>
+                <li><a href="#">管理员设置</a></li>
+                <li class="active">权限列表</li>
+            </ol>
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>权限列表</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" href="#">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-md-8">
+                            <form action="/admin/auth_rule/index" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="keyword" type="text" placeholder="权限名称" value="{if condition='isset($keyword)'}{$keyword}{/if}">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-green" type="submit">搜索</button>
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-sm btn-info" href="/admin/auth_rule/add"><i class="fa fa-plus-circle"></i>
+                                新增权限</a>
+                        </div>
+                    </div>
+                    <div class="manager-list">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <label>ID</label>
+                                </th>
+                                <th>
+                                    <label>权限名称</label>
+                                </th>
+                                <th>
+                                    <label>URL</label>
+                                </th>
+                                <th>
+                                    <label>类型</label>
+                                </th>
+                                <th>
+                                    <label>状态</label>
+                                </th>
+                                <th>
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {notempty name="list"}
+                            {foreach $list as $item}
+                            <tr>
+                                <td>{$item['id']}</td>
+                                <td>{$item['title']}</td>
+                                <td>{$item['name']}</td>
+                                <td>{$item['type']}</td>
+                                <td>
+                                    <a href="statusChange?id={$item['id']}&status={$item['status']}">
+                                        {switch name="item.status"}
+                                        {case value="-1"}<span class="label label-warning">删除</span>{/case}
+                                        {case value="0"}<span class="label label-danger">禁用</span>{/case}
+                                        {case value="1"}<span class="label label-primary">正常</span>{/case}
+                                        {case value="2"}<span class="label label-info">待审核</span>{/case}
+                                        {/switch}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-white" href="/admin/auth_rule/edit?id={$item['id']}" type="button"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger" href="/admin/auth_rule/delete?id={$item['id']}" type="button"><i class="fa fa-remove"></i>删除</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            {else}
+                            <td colspan="9" class="text-center">aOh! 暂时还没有内容!</td>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                        <div class="container-fluid">
+                            <div class="text-center">
+                            {$page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="modal add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">新增用户</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="add" method="post">
+                    <div class="form-group">
+                        <input type="text" name="nickname" class="form-control login-form" placeholder="用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control login-form" placeholder="example@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="datetime" name="birthday" class="form-control login-form" placeholder="出生日期:Y-m-d" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info form-control login-form">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+</body>
+</html>

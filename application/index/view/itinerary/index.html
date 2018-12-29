@@ -1,0 +1,162 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .nav-custom.navbar-nav > li.itinerary-active > a,
+    .nav-custom.navbar-nav > li.itinerary-active > a:hover {
+        background: none;
+        color: #05AFEE;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="content plan">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>即将出发</strong>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {foreach $itinerary as $v}
+                    <div class="col-sm-12">
+                        <div class="media">
+                            <div class="media-left p-25">
+                                <div class="will-start">
+                                    <h5>{$v.day_go}</h5>
+                                    天后出发
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="{:url('itinerary/detail?id='.$v.id)}">{$v.title}</a></h4>
+                                <div class="trip-info">
+                                    <p class="trip-user">
+                                        <em>{$v.member_count}</em> 人
+                                    </p>
+                                    <p class="trip-days">
+                                        <em>{$v.day}</em> 天
+                                    </p>
+                                    <p class="trip-money">
+                                        预算<em>{$v.price}</em>元/人
+                                    </p>
+                                    <p class="trip-date">
+                                        {$v.start_time} - {$v.end_time} </p>
+                                </div>
+                                <div class="trip-plan-desc mbottom">
+                                    <kbd>行程概况</kbd><i class="fa fa-caret-right"></i>
+                                    <p>
+                                        {foreach $v.place as $vv}
+                                            {$vv.title}<i class="fa fa-caret-right"></i>
+                                        {/foreach}
+                                    </p>
+                                    <div class="mask"></div>
+                                </div>
+                                <ul class="user-list">
+                                    {volist name="v.members" id="member"}
+                                    <li>
+                                        <a href="{:url('ucenter/index?id='.$member.member_id)}" target="_blank" class="user-face">
+                                            <img src="{$member.avatar|default='/static/images/guitar.jpg'}">
+                                        </a>
+                                    </li>
+                                    {/volist}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    {/foreach}
+
+                </div>
+            </div>
+            <div class="panel panel-default no-background">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>值得期待</strong>
+                    </h3>
+                </div>
+                <div class="panel-body">
+
+                    {foreach $itinerary1 as $v}
+                    <div class="col-sm-6">
+                        <div class="trip-item media">
+                            <div class="media-left p-25">
+                                <a href="{:url('ucenter/index?id='.$v.member_id)}"><img src="{$v.member.avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="{:url('itinerary/detail?id='.$v.id)}">{$v.title}</a></h4>
+                                <div class="trip-info">
+                                    <p class="trip-user">
+                                        <em>{$v.member_count}</em> 人
+                                    </p>
+                                    <p class="trip-days">
+                                        <em>{$v.day}</em> 天
+                                    </p>
+                                    <p class="trip-money">
+                                        预算<em>{$v.price}</em>元/人
+                                    </p>
+                                    <p class="trip-date">
+                                        {$v.start_time} - {$v.end_time} </p>
+                                </div>
+                                <div class="trip-plan-desc mbottom">
+                                    <kbd>行程概况</kbd><i class="fa fa-caret-right"></i>
+                                    <p>
+                                        {foreach $v.place as $vv}
+                                        {$vv.title}<i class="fa fa-caret-right"></i>
+                                        {/foreach}
+                                    </p>
+                                    <div class="mask"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   {/foreach}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <strong>刚刚创建</strong>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="plans-new">
+
+                        {foreach $itinerary2 as $v}
+                        <div class="col-sm-4">
+                            <div class="media trip-item">
+                                <div class="media-left p-25">
+                                    <a href="{:url('ucenter/index?id='.$v.member_id)}"><img src="{$v.member.avatar|default='/static/images/guitar.jpg'}" alt=""></a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="{:url('itinerary/detail?id='.$v.id)}">{$v.title}</a></h4>
+                                    <div class="trip-info">
+                                        <p class="trip-date">
+                                            <a href="{:url('ucenter/index?id='.$v.member_id)}" target="_blank">{$v.member.nickname}</a>
+                                            {$v.start_time} - {$v.end_time} </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+
+
+
+
+                    </div>
+                    <div class="create-new text-center">
+                        <div class="col-sm-12">
+                            <p>和大家一样，用途客集规划未来的旅行吧！</p>
+                            <a href="{:url('itinerary/add')}" class="btn btn-lg btn-success"><span>新建行程单</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+{/block}
+
+

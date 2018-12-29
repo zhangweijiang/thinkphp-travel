@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网站设置</title>
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        select.form-control {
+            width: auto;
+        }
+        .tab-content {
+            margin-top: 20px;
+        }
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:focus,
+        .nav-tabs > li.active > a:hover {
+            border-radius: 0;
+            border-top: 1px solid #38b4e0;
+        }
+        .nav-tabs>li>a {
+            border-radius: 0;
+        }
+        .nav-tabs>li>a:hover {
+            background: none;
+        }
+    </style>
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox ibox-inverse seo">
+                <div class="ibox-title">
+                    <h5>网站设置</h5>
+                </div>
+                <div class="ibox-content">
+                    <ul class="nav nav-tabs" role="tablist">
+                        {volist name="Think.config.config_group_list" id="group"}
+
+                        <li {eq name="id" value="$key" } class="active" {/eq}><a href="{:url('?id='.$key)}">{$group}配置</a></li>
+
+                        {/volist}
+
+                    </ul>
+                    <div class="tab-content">
+
+                        <form class="form-horizontal" role="form" method="post" action="{:url('save')}">
+                            {volist name="list" id="config"}
+                            <input type="hidden" name="id" value="{$info.id|default=''}">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{$config.title} : </label>
+                                <div class="col-sm-6">
+                                    {switch name="config.type"}
+                                    {case value="0"}
+                                    <input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+                                    {/case}
+                                    {case value="1"}
+                                    <input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+                                    {/case}
+                                    {case value="2"}
+                                    <textarea class="form-control" rows="5" name="config[{$config.name}]">{$config.value}</textarea>
+                                    {/case}
+                                    {case value="3"}
+                                    <textarea class="form-control" rows="10" name="config[{$config.name}]">{$config.value}</textarea>
+                                    {/case}
+                                    {case value="4"}
+                                    <select class="form-control" name="config[{$config.name}]">
+                                        {volist name=":parse_config_attr($config['extra'])" id="vo"}
+                                        <option value="{$key}" {eq name="config.value" value="$key" }selected{
+                                        /eq}>{$vo}</option>
+                                        {/volist}
+                                    </select>
+                                    {/case}
+                                    {/switch}
+                                </div>
+                                <span class="col-sm-4 help-block text-danger">（{$config.remark}）</span>
+                            </div>
+                            {/volist}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-green">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

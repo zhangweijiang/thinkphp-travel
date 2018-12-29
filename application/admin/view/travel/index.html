@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>游记列表</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="admin-id">
+                                    <label>出发地</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>目的地</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>标题</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>描述</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>状态</label>
+                                </th>
+                                <th class="last-login">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {foreach $travel_list as $v}
+                            <tr>
+                                <td>{$v.origin_name}</td>
+                                <td>{$v.destination_name}</td>
+                                <td>{$v.title}</td>
+                                <td>{$v.description}</td>
+                                <td>{if $v.status==0}禁用{elseif $v.status==1}正常{elseif $v.status==2}举报{/if}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-info" href="/index/travel/detail?id={$v.id}" type="button" target="__parent"><i class="fa fa-eye"></i>查看</a>
+                                    <a class="btn btn-sm btn-danger" href="/admin/travel/delete?id={$v.id}" type="button"><i class="fa fa-trash"></i>删除</a>
+                                    <a class="btn btn-sm btn-warning" href="/admin/travel/report?id={$v.id}" type="button"><i class="fa fa-warning"></i>举报</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+</body>
+</html>

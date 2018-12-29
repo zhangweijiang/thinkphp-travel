@@ -1,0 +1,299 @@
+{extend name="public/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+<style>
+    .edit-info > div > .top {
+        overflow: hidden;
+        padding: 0 15px;
+    }
+    .edit-info > div > .top .btn {
+        border-radius: 0;
+        padding: 8px 12px;
+    }
+    .private:hover {
+        background-color: #fb1535;
+        border: 1px solid #fb1535;
+    }
+    .itinerary-title {
+        background: #ededed;
+        margin: 20px 0;
+        padding: 15px 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .members {
+        text-align: center;
+    }
+    .members > li {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    .members > li > a {
+        overflow: hidden;
+    }
+    .members > li > p {
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+    }
+    .members > li > a > img {
+        height: 56px;
+        width: 56px;
+        margin-bottom: 5px;
+        border-radius: 50%;
+    }
+    .timepay {
+        margin: 10px 0;
+        overflow: hidden;
+        border-bottom: 1px solid #ededed;
+        padding-bottom: 10px;
+    }
+    .pay {
+        color: #05aeec;
+    }
+    .pay span {
+        color: #666;
+    }
+    .day {
+        border: 1px solid #ededed;
+    }
+    .light {
+        overflow: hidden;
+    }
+    .night {
+        overflow: hidden;
+        background: #d5eefa;
+    }
+    .day-title {
+        background: #31b0d5;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 0 10px 10px;
+        border: 1px solid #31b0d5;
+        color: #FFF;
+        margin-top: 0;
+    }
+    .day .form-group {
+        margin: 30px 0;
+        overflow: hidden;
+    }
+    .radio-inline {
+        margin: 10px;
+        margin-top: 0;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="content create">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="edit-info">
+                        <div class="col-sm-12">
+                            <div class="top">
+                                {if condition="$result.member_id==$Think.session.user.id"}<a class="btn btn-info btn-sm" href="{:url('itinerary/edit1?id='.$result.id)}"><span><i class="fa fa-eye"></i> 编辑行程</span></a>{else/}<a class="btn btn-info join" href="javascript:void(0)"><span><i class="fa fa-eye"></i> 参与旅程</span></a>{/if}
+                                {if condition="$result.member_id==$Think.session.user.id"}
+                                {else/}
+                                <a class="btn btn-info btn-sm report pull-right" href="javascript:void(0)" data-toggle="modal" data-target=".modal"><span><i class="fa fa-warning"></i> 举报旅程</span></a>
+                                {/if}
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <p id="edit-title" class="itinerary-title text-center">厦门</p>
+                        </div>
+                        <div class="col-sm-12">
+                            <ul class="members center-block list-unstyled">
+                                {volist name="members" id="member"}
+                                <li>
+                                    <a href="{:url('ucenter/index?id='.$member.member_id)}">
+                                        <img src="{$member.avatar|default='/static/images/avatar.jpg'}" alt="">
+                                    </a>
+                                    <p>{$member.nickname}</p>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="timepay">
+                                <span class="col-sm-1 control-label form-control-label">出发日期</span>
+                                <div class="col-sm-2">
+                                    <p class="control-label form-control-label">{$start_time}</p>
+                                </div>
+                                <span class="col-sm-1 control-label form-control-label">返程日期</span>
+                                <div class="col-sm-2">
+                                    <p class="control-label form-control-label">{$end_time}</p>
+                                </div>
+                                <div class="col-sm-1">
+                                    <p class="control-label form-control-label"><i class="fa fa-mouse-pointer"></i> {$click.click_num}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="edit-info">
+                            {foreach $itinerary as $key=>$value}
+                                <div class="day">
+                                    <h3 class="day-title">第{$value.day}天</h3>
+                                    <div class="light">
+                                        <div class="form-group">
+                                            <span class="col-sm-2 text-right control-label form-control-label">行程事件</span>
+                                            <div class="col-sm-5">
+                                                <input name="title[]" class="trip-name form-control" type="text" disabled  placeholder="景点/目的地/事件" required value="{$value.title|default='无'}">
+                                            </div>
+                                            <span class="col-sm-1  text-left control-label form-control-label">费用</span>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">￥</span>
+                                                    <input class="disabled form-control" type="text" name="pay[]" disabled value="{$value.pay|default=0}">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="col-sm-2 text-right control-label form-control-label">行程描述</span>
+                                            <div class="col-sm-8">
+                                                <textarea class="disabled form-control" name="description[]" id="description" rows="7" disabled placeholder="简单描述一下今天的行程...">{$value.description|default='无'}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="night">
+                                        <div class="form-group">
+                                            <span class="col-sm-2  text-right control-label form-control-label">住宿</span>
+                                            <div class="col-sm-5">
+                                                <input name="title1[]" class="disabled trip-name form-control" type="text" disabled placeholder="酒店/旅舍/沙发？" required value="{$value.title1|default='无'}">
+                                            </div>
+                                            <span class="col-sm-1  text-left control-label form-control-label">费用</span>
+                                            <div class="col-sm-2">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">￥</span>
+                                                    <input class="disabled form-control" type="text" name="pay1[]" disabled value="{$value.pay1|default=0}">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <span class="col-sm-2 text-right control-label form-control-label">住宿描述</span>
+                                            <div class="col-sm-8">
+                                                <textarea class="disabled form-control" name="description1[]" id="description" disabled rows="7" placeholder="简单描述一下住宿情况...">{$value.description1|default='无'}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        <input type="hidden" value="{$id}" class="itinerary_id">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">举报</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-8">
+                        <div class="form-group">
+                            <input type="hidden" value="{$result.id}" id="itinerary_id">
+                            {foreach $report_type as $key=>$v}
+                            {if $key==0}
+                            <label class="radio-inline">
+                                <input type="radio" value="{$v.id}" class="report_type" checked="checked" name="radio1">{$v.name}
+                            </label>
+                            {else}
+                            <label class="radio-inline">
+                                <input type="radio" value="{$v.id}" class="report_type" name="radio1">{$v.name}
+                            </label>
+                            {/if}
+                            {/foreach}
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="content" id="content" rows="4" required placeholder="请输入举报内容"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendMessage" type="button" class="btn btn-primary submit">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{/block}
+{block name="script"}
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+
+<script>
+
+       $('.join').click(function(){
+           var _this=$(this);
+           $.ajax({
+               url:"{:url('itinerary/join')}",
+               type:'post',
+               dataType:'json',
+               data:{id:$('.itinerary_id').val()},
+               success:function(data){
+                   if(data.flag==1){
+                       alert('参与成功！');
+                       _this.removeClass('btn-info').addClass('btn-danger');
+                       _this.unbind('click');
+                   }else if(data.flag==2){
+                       alert('您是行程发布者，不能参与!');
+
+                   }else{
+                       alert('参与失败!');
+                   }
+               }
+           });
+       });
+
+       var join=$('.join');
+       $.ajax({
+           url:"{:url('itinerary/join1')}",
+           type:'post',
+           dataType:'json',
+           data:{id:$('.itinerary_id').val()},
+           success:function(data){
+                if(data.flag==0){
+                    /*跳转到登陆界面*/
+                }else if(data.flag==1){
+                    /*已参与过该行程，不能参与了*/
+                    join.removeClass('btn-info').addClass('btn-danger');
+                    join.unbind('click');
+                }else{
+                    /*还未参与该行程，*/
+                }
+           }
+       });
+
+    /*举报*/
+       $('.submit').on('click',function(){
+           var report_type=$('.report_type:checked').val();
+           var itinerary_id=$('#itinerary_id').val();
+           var content=$('#content').val();
+           $.ajax({
+               url:"{:url('itinerary/report')}",
+               type:'post',
+               dataType:'json',
+               data:{report_type:report_type,type:1,itinerary_id:itinerary_id,content:content},
+               success:function(data){
+                   if(data.flag==true){
+                       alert('举报成功');
+                       $('#content').val('');
+                       $('#modal').modal('hide');
+
+                   }
+               }
+           })
+       });
+</script>
+{/block}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+    <title>添加管理员</title>
+
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <!--<ol class="breadcrumb">
+                <li><a href="#">控制台</a></li>
+                <li><a href="#">管理员设置</a></li>
+                <li class="active">添加用户组</li>
+            </ol>-->
+            <div class="ibox ibox-inverse seo">
+                <!--<div class="ibox-title">
+                    <h5>添加用户组</h5>
+                </div>-->
+
+                <div class="ibox-content">
+                    <a class="btn btn-white" href="/admin/auth_rule/index" >返回</a >
+                    <form class="form-horizontal" role="form" method="post" action="/admin/auth_rule/add">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">权限名称 : </label>
+                            <div class="col-sm-6">
+                                <input id="name" class="col-sm-6 form-control" name="name" type="text" placeholder="name">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="module" class="col-sm-2 control-label">模块 : </label>
+                            <div class="col-sm-6">
+                                <input id="module" class="form-control" name="module" type="text" placeholder="module">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="controller">控制器 : </label>
+                            <div class="col-sm-6">
+                                <input id="controller" class="form-control" name="controller" type="text" placeholder="controller">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="action" class="col-sm-2 control-label">方法 : </label>
+                            <div class="col-sm-6">
+                                <input id="action" class="form-control" name="action" type="text" placeholder="action">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="level" class="col-sm-2 control-label">层次 : </label>
+                            <div class="col-sm-6">
+                                <input id="level" class="form-control" name="level" type="number" placeholder="level">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-green" type="submit" value="提交">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>管理员列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>导航列表</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-md-4">
+                            <a class="btn btn-info btn-sm" href="{:url('add','pid='.$pid)}"><i class="fa fa-plus-circle"></i> 新增导航</a>
+                        </div>
+                    </div>
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th class="admin-id">
+                                    <label>ID</label>
+                                </th>
+                                <th class="admin-name">
+                                    <label>导航名称</label>
+                                </th>
+                                <th class="last-login">
+                                    <label>导航地址</label>
+                                </th>
+                                <th class="login-times">
+                                    <label>排序</label>
+                                </th>
+                                <th class="operation">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {notempty name="list"}
+                            {volist name="list" id="channel"}
+                            <tr>
+                                <td>{$channel.id}</td>
+                                <td><a href="{:url('index?pid='.$channel['id'])}">{$channel.title}</a></td>
+                                <td>{$channel.url}</td>
+                                <td>{$channel.sort}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-white" href="{:url('edit?id='.$channel['id'].'&pid='.$pid)}" type="button"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger ajax-get" href="{:url('del?id='.$channel['id'])}" type="button"><i class="fa fa-remove"></i>删除</a>
+                                </td>
+
+                            </tr>
+                            {/volist}
+                            {else/}
+                            <td colspan="6" class="text-center"> aOh! 暂时还没有内容! </td>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

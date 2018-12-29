@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <title>编辑配置</title>
+
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <!--<ol class="breadcrumb">
+                <li><a href="#">控制台</a></li>
+                <li><a href="#">管理员设置</a></li>
+                <li class="active">添加用户组</li>
+            </ol>-->
+            <div class="ibox ibox-inverse seo">
+                <div class="ibox-title">
+                    <h5>{$info['id'] ? '编辑' : '新增' }配置</h5>
+                </div>
+
+                <div class="ibox-content">
+                    <a class="btn btn-white" href="{:url('index')}" >返回</a >
+                    <form class="form-horizontal" role="form" method="post" action="{:url()}">
+                        <input type="hidden" name="id" value="{$info.id|default=''}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">配置标识 : </label>
+                            <div class="col-sm-6">
+                                <input id="name" class="col-sm-6 form-control" name="name" type="text" placeholder="请输入配置标识" value="{$info.name|default=''}">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（用于C函数调用，只能使用英文且不能重复）</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">配置标题 : </label>
+                            <div class="col-sm-6">
+                                <input id="title" class="form-control" name="title" type="text" placeholder="请输入配置标题" value="{$info.title|default=''}">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（用于后台显示的配置标题）</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="sort">排序 : </label>
+                            <div class="col-sm-6">
+                                <input id="sort" class="form-control" name="sort" type="text" placeholder="排序" value="{$info.title|default=0}">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（用于分组显示的顺序）</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="type" class="col-sm-2 control-label">配置类型 : </label>
+                            <div class="col-sm-6">
+                                <select id="type" name="type">
+                                    {volist name="Think.config.config_type_list" id="type"}
+                                    <option value="{$key}">{$type}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（系统会根据不同类型解析配置值）</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">配置分组 : </label>
+                            <div class="col-sm-6">
+                                <select name="group">
+                                    <option value="0">不分组</option>
+                                    {volist name="Think.config.config_group_list" id="group"}
+                                    <option value="{$key}">{$group}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（配置分组 用于批量设置 不分组则不会显示在系统设置中）</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="value" class="col-sm-2 control-label">配置值 : </label>
+                            <div class="col-sm-6">
+                                <textarea class="col-sm-12 form-control" name="value" id="value" rows="10" placeholder="请输入配置值">{$info.value|default=''}</textarea>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（配置值）</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="extra" class="col-sm-2 control-label">配置项 : </label>
+                            <div class="col-sm-6">
+                                <textarea class="col-sm-12 form-control" name="extra" id="extra" rows="10" width="100%" placeholder="请输入配置项">{$info.extra|default=''}</textarea>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（如果是枚举型 需要配置该项）</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="remark" class="col-sm-2 control-label">说明 : </label>
+                            <div class="col-sm-6">
+                                <textarea class="col-sm-12 form-control" name="remark" id="remark" rows="10" width="100%" placeholder="请输入配置详细说明">{$info.remark|default=''}</textarea>
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">（配置详细说明）</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-green" type="submit" value="保存">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

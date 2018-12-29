@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>配置管理</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/font-awesome.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/animate.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/style.css">
+    <style>
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>
+                        配置管理 [
+                        {if condition="input('group')"}
+                        <a href="{:url('index')}">全部</a>
+                        {else/}<strong>全部</strong>
+                        {/if}
+                        {foreach name="group" item="vo"}
+                        {if condition="$key != input('group')"}
+                        <a href="{:url('index?group='.$key)}">{$vo}</a>
+                        {else/}<strong>{$vo}</strong>
+                        {/if}
+                        {/foreach} ]
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-md-4">
+                            <form action="/admin/config/index" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="name" type="text" placeholder="请输入配置项名称" value="{:input('name')}">
+                                    <span class="input-group-btn">
+                                    <input class="btn btn-green" type="submit" value="搜索">
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-sm btn-info" href="{:url('add')}"><i class="fa fa-plus-circle"></i>
+                                新增</a>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-sm btn-danger batch-delete" href="{:url('delete')}"><i class="fa fa-remove"></i>
+                                删除</a>
+                        </div>
+                    </div>
+                    <div class="manager-list">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <label>ID</label>
+                                </th>
+                                <th>
+                                    <label>名称</label>
+                                </th>
+                                <th>
+                                    <label>标题</label>
+                                </th>
+                                <th>
+                                    <label>分组</label>
+                                </th>
+                                <th>
+                                    <label>类型</label>
+                                </th>
+                                <th>
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {notempty name="list"}
+                            {foreach $list as $config}
+                            <tr>
+                                <td>{$config.id}</td>
+                                <td><a href="{:url('edit?id='.$config['id'])}">{$config.name}</a></td>
+                                <td>{$config.title}</td>
+                                <td>{$config.group|get_config_group}</td>
+                                <td>{$config.type|get_config_type}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-white" href="{:url('edit?id='.$config['id'])}" type="button"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger" href="{:url('delete?id='.$config['id'])}" type="button"><i class="fa fa-remove"></i>删除</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                            {else}
+                            <td colspan="6" class="text-center">aOh! 暂时还没有内容!</td>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                        <div class="container-fluid">
+                            <div class="text-center">
+                                {$_page}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+<!--<script>-->
+    <!--$('.batch-delete').on('click', function () {-->
+        <!--var option = $(".checkItem");-->
+        <!--var id = new Array();-->
+        <!--var index = 0;-->
+        <!--option.each(function(i) {-->
+            <!--if(this.checked){-->
+                <!--id[index++] = $(this).val();-->
+            <!--}-->
+        <!--});-->
+        <!--$.ajax({-->
+            <!--'type': 'GET',-->
+            <!--'url': 'delete',-->
+            <!--'data' : {'id':['111','222','333']},-->
+            <!--'success': function (data) {-->
+                <!--alert('aaa');-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+</body>
+</html>

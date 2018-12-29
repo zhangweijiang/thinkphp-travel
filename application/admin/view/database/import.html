@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据还原</title>
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>数据还原</h5>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="manager-list">
+                        <form id="export-form" method="post" action="{:url('export')}">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <label>备份名称</label>
+                                    </th>
+                                    <th>
+                                        <label>卷数</label>
+                                    </th>
+                                    <th>
+                                        <label>压缩</label>
+                                    </th>
+                                    <th>
+                                        <label>数据大小</label>
+                                    </th>
+                                    <th>
+                                        <label>备份时间</label>
+                                    </th>
+                                    <th>
+                                        <label>状态</label>
+                                    </th>
+                                    <th>
+                                        <label>操作</label>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {notempty name="list"}
+                                {volist name="list" id="data"}
+                                <tr>
+                                    <td>{$data.time|date='Ymd-His',###}</td>
+                                    <td>{$data.part}</td>
+                                    <td>{$data.compress}</td>
+                                    <td>{$data.size|format_bytes}</td>
+                                    <td>{$key}</td>
+                                    <td>-</td>
+                                    <td class="action">
+                                        <a class="btn btn-sm btn-success db-import" href="{:url('import?time='.$data['time'])}">还原</a>&nbsp;
+                                        <a class="btn btn-sm btn-danger ajax-get confirm" href="{:url('del?time='.$data['time'])}">删除</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                {else/}
+                                <td colspan="8" class="text-center"> aOh! 暂时还没有备份文件! </td>
+                                {/notempty}
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+<script type="text/javascript">
+    $(".db-import").click(function(){
+        var self = this, code = ".";
+        $.get(self.href, success, "json");
+        window.onbeforeunload = function(){ return "正在还原数据库，请不要关闭！" }
+        return false;
+
+        function success(data){
+            if(data.code){
+                if(data.data.gz){
+                    data.msg += code;
+                    if(code.length === 5){
+                        code = ".";
+                    } else {
+                        code += ".";
+                    }
+                }
+                $(self).parent().prev().text(data.msg);
+                if(data.data.part){
+                    $.get(self.href,
+                        {"part" : data.data.part, "start" : data.data.start},
+                        success,
+                        "json"
+                    );
+                }  else {
+                    window.onbeforeunload = function(){ return null; }
+                }
+            } else {
+                updateAlert(data.msg,'alert-error');
+            }
+        }
+    });
+</script>
+</body>
+</html>

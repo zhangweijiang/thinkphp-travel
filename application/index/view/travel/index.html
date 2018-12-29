@@ -1,0 +1,111 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .nav-custom.navbar-nav > li.travel-active > a,
+    .nav-custom.navbar-nav > li.travel-active > a:hover {
+        background: none;
+        color: #05afee;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="content travel-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="photo-board">
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/23.jpg" alt=""></div>
+                            <div class="col-sm-6">
+                                <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/24.jpg" alt=""></div>
+                            <div class="col-sm-12">
+                                <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/28.jpg" alt=""></div>
+                            <div class="col-sm-6">
+                                <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/25.jpg" alt=""></div>
+                            <div class="col-sm-6">
+                                <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/26.jpg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/27.jpg" alt="">
+                        <img src="{$Think.const.PUBLIC_STATIC_PATH}/images/30.jpg" alt="">
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-body">
+                        {foreach $travelList as $travel}
+                        <div class="travel-item">
+                            <h3 class="travel-title">
+                                <a href="{:url('travel/detail',['id'=>$travel.id])}">{$travel.title}</a>
+                            </h3>
+                            <div class="media media-travel-item">
+                                <div class="media-left">
+                                    <img src="{$travel.cover|default='/static/images/guitar.jpg'}" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <p class="media-heading">
+                                        {$travel.description}
+                                    </p>
+                                    <a class="btn btn-info" href="{:url('travel/detail',['id'=>$travel.id])}">阅读全文</a>
+                                    <div class="travel-item-info">
+                                        <p class="travel-item-comments">
+                                            <span class="fa fa-comments"></span>评论：{$travel.commentNum}
+                                        </p>
+                                        <p class="travel-item-hit" title="浏览数">
+                                            <span class="fa fa-eye"></span>浏览：{$travel.viewNum}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="sidebar">
+                    <div class="travel-create">
+                        <a class="btn btn-danger center-block" href="{:url('travel/add')}">发布游记</a>
+                    </div>
+                    <div class="panel travel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">最新发布</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                {volist name="travelNew" id="item"}
+                                <li><a href="{:url('travel/detail',['id'=>$item.id])}">{$item.title}</a></li>
+                                {/volist}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel tags">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">最热门目的</h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="#">厦门</a>
+                            <a href="#">上海</a>
+                            <a href="#">海南</a>
+                            <a href="#">云南</a>
+                            <a href="#">旧金山</a>
+                            <a href="#">泰国</a>
+                            <a href="#">韩国</a>
+                            <a href="#">日本</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-12">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="script"}
+
+{/block}

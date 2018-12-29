@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+
+    <title>添加用户组</title>
+
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/animate.min.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <!--<ol class="breadcrumb">
+                <li><a href="#">控制台</a></li>
+                <li><a href="#">管理员设置</a></li>
+                <li class="active">添加用户组</li>
+            </ol>-->
+            <div class="ibox ibox-inverse seo">
+                <!--<div class="ibox-title">
+                    <h5>添加用户组</h5>
+                </div>-->
+
+                <div class="ibox-content">
+                    <a class="btn btn-white" href="/admin/auth_group/index" >返回</a >
+                    <form class="form-horizontal" method="post" role="form" action="/admin/auth_group/add">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="name">用户组名称 : </label>
+                            <div class="col-sm-6">
+                                <input id="name" name="name" class="col-sm-6 form-control" type="text" placeholder="name">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="rules">用户组权限 : </label>
+                            <div class="col-sm-6">
+                                <input id="rules" name="rules" class="form-control" type="text" placeholder="rules">
+                            </div>
+                            <span class="col-sm-4 help-block text-danger">* 必填</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button class="btn btn-green" type="submit">提交保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/wow.min.js"></script>
+<script src="/static/js/hplus.js"></script>
+</body>
+</html>

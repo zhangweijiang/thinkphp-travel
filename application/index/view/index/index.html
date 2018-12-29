@@ -1,0 +1,104 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .nav-custom.navbar-nav > li.index-active > a,
+    .nav-custom.navbar-nav > li.index-active > a:hover {
+        background: none;
+        color: #05AFEE;
+    }
+</style>
+{/block}
+{block name="body"}
+{$travel|default=''}
+<div class="slide">
+    <div id="focus-banner">
+        <ul id="focus-banner-list">
+            <li>
+                <a href="#" class="focus-banner-img">
+                    <img src="/static/images/banner1.jpg" alt="">
+                </a>
+                <!--<div class="focus-banner-text">
+                    <p>这是一句广告语</p>
+                </div>-->
+            </li>
+            <li>
+                <a href="#" class="focus-banner-img">
+                    <img src="/static/images/banner2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="#" class="focus-banner-img">
+                    <img src="/static/images/banner3.jpg" alt="">
+                </a>
+            </li>
+        </ul>
+        <a href="javascript:;" id="next-img" class="focus-handle"></a>
+        <a href="javascript:;" id="prev-img" class="focus-handle"></a>
+        <ul id="focus-bubble"></ul>
+    </div>
+</div>
+
+<div class="start">
+    <a href="{:url('itinerary/add')}" class="btn btn-success btn-lg center-block">新建行程单</a>
+</div>
+<div class="place-recommend">
+    <div class="hot-place">
+        <strong>热门目的地：</strong>
+        <div class="hot-tags">
+            <a href="#">厦门</a>
+            <a href="#">上海</a>
+            <a href="#">旧金山</a>
+            <a href="#">巴厘岛</a>
+            <a href="#">拉萨</a>
+            <a href="#">花莲</a>
+        </div>
+    </div>
+</div>
+<div class="content index">
+    <div class="container">
+        <div class="row">
+            <h3 class="content-title">
+                推荐旅程
+            </h3>
+            <div class="content-main">
+                {foreach $itinerary as $v}
+                <div class="col-sm-6">
+                    <div class="trip-item">
+                        <a class="trip-cover" href="{:url('itinerary/detail?id='.$v.id)}">
+                            <img class="trip-photo" src="/static/images/banner0.jpg" alt="">
+                        </a>
+                        <div class="trip-item-body">
+                            <a href="{:url('itinerary/detail?id='.$v.id)}" class="trip-item-title">{$v.title}</a>
+                            <div class="trip-info">
+                                <p class="trip-user">
+                                    <em>{$v.member_count}</em> 人
+                                </p>
+                                <p class="trip-days">
+                                    <em>{$v.day}</em> 天
+                                </p>
+                                <p class="trip-money">
+                                    预算<em>{$v.price}</em> 元/人
+                                </p>
+                                <p class="trip-like" title="喜欢人数">
+                                    <span class="fa fa-heart"></span>3
+                                </p>
+                                <p class="trip-hit" title="浏览数">
+                                    <span class="fa fa-mouse-pointer"></span>{$v.viewNum|default=0}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+            <p class="text-center">
+                <a class="trip-more btn btn-info" href="{:url('itinerary/index')}">更多推荐的旅程....</a>
+            </p>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+
+{/block}

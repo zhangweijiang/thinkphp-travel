@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <title>菜单列表</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/font-awesome.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/animate.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo PUBLIC_STATIC_PATH; ?>/css/style.css">
+    <style>
+
+
+        /*-------------------------*/
+        .manager-list .table th,
+        .manager-list .table td {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox manager">
+                <div class="ibox-title">
+                    <h5>{present name="data"}[ <a href="{:url('menu/index?pid='.$data.pid)}">{$data.title}</a> ] 子{/present}菜单列表 </h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-md-4">
+                            <form action="{:url('menu/index')}" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="keyword" type="text" placeholder="输入菜单名称" value="{if condition='isset($keyword)'}{$keyword}{/if}">
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-green" type="submit">搜索</button>
+                                </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-info btn-sm" href="{:url('menu/add')}"><i class="fa fa-plus-circle"></i> 新增菜单</a>
+                        </div>
+                    </div>
+                    <div class="manager-list">
+                        <table class="table table-hover text-center">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <label>名称</label>
+                                </th>
+                                <th>
+                                    <label>上级菜单</label>
+                                </th>
+                                <th>
+                                    <label>分组</label>
+                                </th>
+                                <th>
+                                    <label>URL</label>
+                                </th>
+                                <th>
+                                    <label>排序</label>
+                                </th>
+                                <th>
+                                    <label>仅开发者模式显示</label>
+                                </th>
+                                <th>
+                                    <label>隐藏</label>
+                                </th>
+                                <th class="operation">
+                                    <label>操作</label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {notempty name="list"}
+                            {volist name="list" id="menu"}
+                            <tr>
+                                <td>
+                                    <a href="{:url('menu/index?id='.$menu.id)}">{$menu.title}</a>
+                                </td>
+                                <td>{$menu.up_title|default='无'}</td>
+                                <td>{$menu.group|default='无'}</td>
+                                <td>{$menu.url}</td>
+                                <td>{$menu.sort}</td>
+                                <td>
+                                    <a href="#">
+                                        {$menu.is_dev_text}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#">
+                                        {$menu.hide_text}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-white" href="{:url('menu/edit?id='.$menu.id)}" type="button"><i class="fa fa-edit"></i>编辑</a>
+                                    <a class="btn btn-sm btn-danger" href="{:url('menu/delete?id='.$menu.id)}" type="button"><i class="fa fa-remove"></i>删除</a>
+                                </td>
+
+                            </tr>
+                            {/volist}
+                            {else/}
+                            <td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+                            {/notempty}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/jquery.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/wow.min.js"></script>
+<script src="<?php echo PUBLIC_STATIC_PATH; ?>/js/hplus.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+<div class="space-banner">
+    <div class="space-banner-inner container">
+        <div class="space-face">
+            <a href="{:url('ucenter/index?id='.$member.id)}" class="user-face">
+                <img src="{$member.avatar==null?'/static/images/guitar.jpg':$member.avatar}" class="pic img-circle img-thumbnail">
+                <i class="light"></i>
+            </a>
+        </div>
+        <div class="space-intro">
+            <h1 class="user-name"><a href="{:url('ucenter/index?id='.$member.id)}">{$member.nickname}</a></h1>
+            <p class="space-ext">
+                <span class="fa fa-genderless">{$member.sex == 0 ? '保密':($member.sex == 1 ? '男' : '女') }</span>
+            </p>
+        </div>
+        <div class="space-description"></div>
+        <div class="space-console">
+            {if condition="$isMe eq 1"}
+            <a href="{:url('ucenter/profile')}">» 修改资料</a>
+            {else/}
+            <a href="#"><b class="fa fa-envelope"></b><span>发私信</span></a>
+            {/if}
+        </div>
+    </div>
+</div>
+
+<div class="content photoBoard">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{:url('ucenter/index?id='.$member.id)}">{$member.nickname}</a></li>
+            <li class="active">照片墙</li>
+        </ol>
+        <div class="row">
+            <div class="photo-list">
+                {notempty name="photos"}
+                {volist name="photos" id="photo"}
+                <div class="col-sm-3">
+                    <div class="photo-item">
+                        <a href="{:url('itinerary/detail?id='.photo.itinerary_id)}">
+                            <img src="images/article.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                {/volist}
+                {else/}
+                <div class="col-sm-12">
+                    <div class="no-photos">还没有上传过照片呦！</div>
+                </div>
+                {/notempty}
+            </div>
+            <div class="pull-right">
+                {$page}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+{/block}

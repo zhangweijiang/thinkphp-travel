@@ -1,0 +1,132 @@
+{extend name="public/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{$Think.const.PUBLIC_STATIC_PATH}/css/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+{/block}
+{block name="body"}
+
+<div class="content account">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-cog"></i>设置</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-2">
+                        <ul class="nav nav-pills nav-stacked text-center">
+                            <li role="presentation" class="active"><a href="{:url('profile')}">个人资料</a></li>
+                            <li role="presentation"><a href="{:url('avatar')}">头像修改</a></li>
+                            <li role="presentation"><a href="{:url('edit')}">账号修改</a></li>
+                            <li role="presentation"><a href="{:url('password')}">密码修改</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="edit-info">
+                                <form class="form-horizontal" method="post" action="{:url('ucenter/profile')}">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">当前Email：</label>
+                                        <label class="col-sm-5 form-control-label">{$Think.session.user.email|default=''}<a class="update-email" href="{:url('ucenter/edit')}">修改</a></label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">* 呢称：</label>
+                                        <div class="col-sm-4">
+                                            <input name="nickname" class="form-control" type="text" value="{$Think.session.user.nickname|default=''}" placeholder="请取一个昵称">
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$validate.nickname|default=''}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label ">* 性别：</label>
+                                        <div class="col-sm-4">
+                                            <input type="radio" name="sex" value="1" {if condition="$Think.session.user.sex==1" } checked="checked" {/if}
+                                            ><i class="fa fa-male text-info"></i>男
+                                            <input type="radio" name="sex" value="2" {if condition="$Think.session.user.sex==2" } checked="checked" {/if}
+                                            ><i class="fa fa-female text-danger"></i>女
+                                            <input type="radio" name="sex" value="0" {if condition="$Think.session.user.sex==0" } checked="checked" {/if}
+                                            >保密
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$validate.sex|default=''}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">所在地：</label>
+                                        <div class="col-sm-10">
+                                            <select id="select_province" name="province_id" class="form-control" data-default="{$Think.session.user.province_id|default=0}">
+                                            </select>
+                                            <select id="select_city" name="city_id" class="form-control" data-default="{$Think.session.user.city_id|default=0}">
+                                            </select>
+                                            <select id="select_area" name="area_id" class="form-control" data-default="{$Think.session.user.area_id|default=0}">
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">生日：</label>
+                                        <div class="col-sm-3">
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input name="birthday" type='text' class="form-control" value="{$Think.session.user.birthday|default=''}" required />
+                                                <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$validate.birthday|default=''}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">手机号：</label>
+                                        <div class="col-sm-4">
+                                            <input name="mobile" class="form-control" type="text" value="{$Think.session.user.mobile|default=''}" placeholder="手机">
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$validate.mobile|default=''}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">QQ号：</label>
+                                        <div class="col-sm-4">
+                                            <input name="qq" class="form-control" type="text" value="{$Think.session.user.qq|default=''}" placeholder="QQ">
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$validate.qq|default=''}</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">职业 / 工作：</label>
+                                        <div class="col-sm-4">
+                                            <input name="position" class="form-control" type="text" value="{$Think.session.user.position|default=''}" placeholder="目前工作">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label">自我描述：</label>
+                                        <div class="col-sm-8">
+                                            <textarea name="self_description" class="form-control" rows="8" placeholder="介绍一下自己..">{$Think.session.user.self_description|default=''}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label form-control-label"></label>
+                                        <div class="col-sm-3">
+                                            <input class="btn btn-info" type="submit" value="保存">
+                                        </div>
+                                        <span class="col-sm-2 text-danger form-control-label">{$error|default=''}</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/address.js"></script>
+<script src="{$Think.const.PUBLIC_STATIC_PATH}/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+<script>
+    region_init("select_province","select_city","select_area");
+    $('#datetimepicker1').datetimepicker({
+        autoclose: true,
+        minView: 'month',
+        format: 'yyyy-mm-dd',
+        forceParse: true,
+        initialDate: new Date(),
+    });
+</script>
+{/block}

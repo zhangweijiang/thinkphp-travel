@@ -1,0 +1,72 @@
+{extend name="public/base" /}
+{block name="style"}{/block}
+
+{block name="body"}
+<div class="content messageCenter">
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-volume-up"></i> 消息</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-2">
+                        <ul class="nav nav-pills nav-stacked text-center">
+                            <li role="presentation"><a href="{:url('message_center/comment')}">评论</a></li>
+                            <li role="presentation"><a href="{:url('message_center/message')}">私信</a></li>
+                            <li role="presentation" class="active"><a href="{:url('message_center/notice')}">通知</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="sys-list">
+                                {foreach $notices as $v}
+                                <div class="media">
+                                    <div class="media-body">
+                                            <h4 class="media-heading">{$v.title}</h4>
+
+                                        <div class="trip-info">
+                                            <p class="trip-date">
+                                                {$v.create_time}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="media-right">
+                                        <a class="del-notice text-info" href="javascript:;">{if $v.type==1}<span class="assure">已同意</span>{else}<span class="confirm" data_id="{$v.id}">同意</span>{/if}</a>
+                                    </div>
+                                </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="script"}
+<script>
+    $('.confirm').on('click',function(){
+        var id=$(this).attr('data_id');
+        var _this=$(this);
+        $.ajax({
+            url:"{:url('message_center/confirm')}",
+            type:'post',
+            dataType:'json',
+            data:{id:id},
+            success:function(data){
+                if(data.flag==true){
+                    alert('同意参与行程成功!');
+                    window.location.reload();
+                }else{
+                    alert('同意参与行程失败！');
+                }
+            }
+
+        })
+
+    });
+</script>
+{/block}
