@@ -43,7 +43,7 @@ class Cx extends Taglib
         'notpresent' => ['attr' => 'name'],
         'defined'    => ['attr' => 'name'],
         'notdefined' => ['attr' => 'name'],
-        'load'       => ['attr' => 'file,href,type,value,basepath', 'close' => 0, 'alias' => ['import,imgareaselect,js', 'type']],
+        'load'       => ['attr' => 'file,href,type,value,basepath', 'close' => 0, 'alias' => ['import,css,js', 'type']],
         'assign'     => ['attr' => 'name,value', 'close' => 0],
         'define'     => ['attr' => 'name,value', 'close' => 0],
         'for'        => ['attr' => 'start,end,name,comparison,step'],
@@ -278,7 +278,7 @@ class Cx extends Taglib
      */
     public function tagCase($tag, $content)
     {
-        $value = !empty($tag['expression']) ? $tag['expression'] : $tag['value'];
+        $value = isset($tag['expression']) ? $tag['expression'] : $tag['value'];
         $flag  = substr($value, 0, 1);
         if ('$' == $flag || ':' == $flag) {
             $value = $this->autoBuildVar($value);
@@ -482,7 +482,7 @@ class Cx extends Taglib
 
     /**
      * load 标签解析 {load file="/static/js/base.js" /}
-     * 格式：{load file="/static/imgareaselect/base.imgareaselect" /}
+     * 格式：{load file="/static/css/base.css" /}
      * @access public
      * @param array $tag 标签属性
      * @param string $content 标签内容
@@ -511,8 +511,8 @@ class Cx extends Taglib
                 case 'js':
                     $parseStr .= '<script type="text/javascript" src="' . $val . '"></script>';
                     break;
-                case 'imgareaselect':
-                    $parseStr .= '<link rel="stylesheet" type="text/imgareaselect" href="' . $val . '" />';
+                case 'css':
+                    $parseStr .= '<link rel="stylesheet" type="text/css" href="' . $val . '" />';
                     break;
                 case 'php':
                     $parseStr .= '<?php include "' . $val . '"; ?>';

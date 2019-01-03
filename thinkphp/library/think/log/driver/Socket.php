@@ -43,7 +43,7 @@ class Socket
     protected $allowForceClientIds = []; //配置强制推送且被授权的client_id
 
     /**
-     * 架构函数
+     * 构造函数
      * @param array $config 缓存参数
      * @access public
      */
@@ -60,7 +60,7 @@ class Socket
      * @param array     $log 日志信息
      * @return bool
      */
-    public function save(array $log = [])
+    public function save(array $log = [], $append = false)
     {
         if (!$this->check()) {
             return false;
@@ -83,7 +83,7 @@ class Socket
             $trace[] = [
                 'type' => 'group',
                 'msg'  => $current_uri . $time_str . $memory_str . $file_load,
-                'imgareaselect'  => $this->css['page'],
+                'css'  => $this->css['page'],
             ];
         }
 
@@ -91,7 +91,7 @@ class Socket
             $trace[] = [
                 'type' => 'groupCollapsed',
                 'msg'  => '[ ' . $type . ' ]',
-                'imgareaselect'  => isset($this->css[$type]) ? $this->css[$type] : '',
+                'css'  => isset($this->css[$type]) ? $this->css[$type] : '',
             ];
             foreach ($val as $msg) {
                 if (!is_string($msg)) {
@@ -100,13 +100,13 @@ class Socket
                 $trace[] = [
                     'type' => 'log',
                     'msg'  => $msg,
-                    'imgareaselect'  => '',
+                    'css'  => '',
                 ];
             }
             $trace[] = [
                 'type' => 'groupEnd',
                 'msg'  => '',
-                'imgareaselect'  => '',
+                'css'  => '',
             ];
         }
 
@@ -114,24 +114,24 @@ class Socket
             $trace[] = [
                 'type' => 'groupCollapsed',
                 'msg'  => '[ file ]',
-                'imgareaselect'  => '',
+                'css'  => '',
             ];
             $trace[] = [
                 'type' => 'log',
                 'msg'  => implode("\n", get_included_files()),
-                'imgareaselect'  => '',
+                'css'  => '',
             ];
             $trace[] = [
                 'type' => 'groupEnd',
                 'msg'  => '',
-                'imgareaselect'  => '',
+                'css'  => '',
             ];
         }
 
         $trace[] = [
             'type' => 'groupEnd',
             'msg'  => '',
-            'imgareaselect'  => '',
+            'css'  => '',
         ];
 
         $tabid = $this->getClientArg('tabid');
