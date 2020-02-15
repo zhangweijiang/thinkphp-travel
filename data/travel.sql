@@ -7745,6 +7745,7 @@ CREATE TABLE `think_travel` (
   `cover` varchar(100) DEFAULT NULL COMMENT '游记封面',
   `tags` varchar(500) DEFAULT NULL COMMENT '标签',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态',
+  `like`  int(10) NULL DEFAULT 0 COMMENT '点赞数' ,
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
